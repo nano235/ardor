@@ -1,0 +1,20 @@
+@import "@/styles/imports";
+
+.title {
+	margin-bottom: 2.4rem;
+	h1 {
+		@extend %title-34;
+		margin-bottom: 0.8rem;
+		font-weight: 700;
+		color: $col-white;
+	}
+	h6 {
+		@extend %text-12;
+		color: #0834f8;
+		font-weight: 800;
+		margin-bottom: 0.8rem;
+	}
+	p {
+		color: #b9b9b9;
+	}
+}

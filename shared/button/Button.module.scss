@@ -1,0 +1,46 @@
+@import "@/styles/imports";
+
+.button {
+	-webkit-tap-highlight-color: transparent;
+	transition: all 0.2s ease-out;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+	gap: 1rem;
+	background-color: #fff;
+	padding: 1.2rem 1.6rem;
+	p {
+		font-weight: 700;
+		@extend %text-16;
+		color: #171717;
+		text-wrap: nowrap;
+	}
+	.button_icon {
+		width: 1.6rem;
+		height: 1.6rem;
+		position: relative;
+		flex-shrink: 0;
+		transition: rotate 0.4s linear;
+	}
+	&:hover {
+		.button_icon {
+			transition: rotate 0.4s linear;
+			rotate: 45deg;
+		}
+	}
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+	&[data-type="secondary"] {
+		background-color: transparent;
+		border: 0.1rem solid #3db54a;
+		p {
+			color: #fff;
+		}
+	}
+}

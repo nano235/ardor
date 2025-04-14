@@ -1,0 +1,39 @@
+@import "@/styles/imports";
+
+.slides {
+	padding-block: 6.4rem;
+	animation: scroll 25s linear infinite;
+	@include flex(flex-start, center);
+	gap: 3.2rem;
+	flex-wrap: nowrap;
+	white-space: nowrap;
+	.slide {
+		position: relative;
+		flex-shrink: 0;
+		width: 27.8rem;
+		height: 6rem;
+		&[data-type="Filmmakers"],
+		&[data-type="Prime"],
+		&[data-type="showmax"] {
+			width: 19.7rem;
+			height: 12rem;
+		}
+		&[data-type="Multichoice"] {
+			width: 12rem;
+			height: 7.2rem;
+		}
+		&[data-type="Natives"] {
+			width: 19.6rem;
+			height: 11.9rem;
+		}
+	}
+
+	@keyframes scroll {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-100%);
+		}
+	}
+}

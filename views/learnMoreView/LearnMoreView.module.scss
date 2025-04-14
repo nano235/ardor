@@ -1,0 +1,162 @@
+@import "@/styles/imports";
+
+.learn {
+	padding: 9.6rem 8rem;
+	.container {
+		max-width: $max-width;
+		margin-inline: auto;
+		.back {
+			@include flex(flex-start, center);
+			cursor: pointer;
+			margin-bottom: 1.6rem;
+			max-width: 8rem;
+			.icon {
+				position: relative;
+				width: 1.6rem;
+				height: 1.6rem;
+				rotate: -110deg;
+				transition: all 0.3s ease;
+			}
+			p {
+				@extend %text-16;
+				color: #fff;
+				font-weight: 700;
+			}
+			&:hover {
+				.icon {
+					rotate: -140deg;
+					transition: all 0.3s ease;
+				}
+			}
+		}
+		.row {
+			@include flex(space-between);
+			gap: 2.4rem;
+			.title {
+				max-width: 71.1rem;
+			}
+			.text {
+				max-width: 45.3rem;
+				text-align: right;
+				h6 {
+					@extend %text-18;
+					color: #b9b9b9;
+					margin-bottom: 1rem;
+				}
+				a {
+					justify-self: flex-end;
+				}
+			}
+		}
+		.block_row {
+			@include grid(30.2rem 1fr);
+			gap: 2.4rem;
+			.nav {
+				padding: 3.2rem 2.4rem;
+				background-color: #232323;
+				height: 24rem;
+				.button {
+					background-color: transparent;
+					padding: 1.2rem 1.6rem;
+					width: 100%;
+					transition: all 0.3s ease;
+					cursor: pointer;
+					p {
+						@extend %text-16;
+						color: $col-white;
+						font-weight: 700;
+					}
+					&:hover {
+						background-color: #0834f8;
+						transition: all 0.3s ease;
+					}
+					&[data-active="true"] {
+						background-color: #0834f8;
+						transition: all 0.3s ease;
+					}
+				}
+			}
+			.block {
+				width: 100%;
+				@include flex();
+				flex-direction: column;
+				gap: 4rem;
+				.text {
+					h2,
+					h3 {
+						@extend %text-24;
+						color: #fff;
+						font-family: $font-monument;
+						margin-bottom: 4rem;
+					}
+					h3 {
+						@extend %text-14;
+						margin-bottom: 2.4rem;
+					}
+					p {
+						@extend %text-18;
+						color: #b9b9b9;
+						&:last-child {
+							margin-top: 2.4rem;
+						}
+					}
+				}
+				ul {
+					margin-top: 2.4rem;
+					padding-left: 2.4rem;
+					list-style: disc;
+					li {
+						@extend %text-18;
+						color: #b9b9b9;
+						margin-bottom: 0.4rem;
+						list-style: disc;
+					}
+				}
+				.image {
+					position: relative;
+					width: 100%;
+					height: 47.5rem;
+				}
+			}
+		}
+	}
+	@include screenMax("mobile") {
+		padding: 4rem 1.6rem;
+		.container {
+			.row {
+				flex-direction: column;
+				gap: 1.6rem;
+				.title {
+					margin: 0;
+				}
+				.text {
+					text-align: left;
+					a {
+						justify-self: flex-start;
+					}
+				}
+			}
+			.block_row {
+				grid-template-columns: 100%;
+				.nav {
+					padding: 0;
+					background-color: transparent;
+					height: auto;
+					@include flex();
+					gap: 1.6rem;
+					.button {
+						width: auto;
+						background-color: #232323;
+					}
+				}
+				.block {
+					.text {
+						p {
+							font-size: 1.8rem;
+						}
+					}
+				}
+			}
+		}
+	}
+}

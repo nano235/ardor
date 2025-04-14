@@ -1,0 +1,78 @@
+@import "@/styles/imports";
+
+.container {
+	position: relative;
+	form {
+		width: 100%;
+	}
+	@include screenMax("mobile") {
+		width: 100%;
+	}
+}
+
+.newsLetter_message {
+	position: absolute;
+	top: 110%;
+	p {
+		font-size: 1.2rem;
+	}
+}
+.newsLetter_error {
+	p {
+		color: #d8000c;
+	}
+}
+.newsLetter_success {
+	p {
+		color: $col-primary;
+	}
+}
+
+.inputContainer {
+	@include flex(space-between, center);
+	width: 100%;
+	gap: 2.4rem;
+	//   @include screenMax('tablet') {
+	//     width: 30rem;
+	//   }
+	@include screenMax("mobile") {
+		width: 100%;
+	}
+}
+
+.title {
+	margin-bottom: 1.6rem;
+	h3 {
+		font-size: 1.2rem;
+		line-height: 1.6rem;
+		font-family: $font-monument;
+		font-weight: 800;
+		color: $col-white;
+		text-transform: uppercase;
+	}
+}
+
+.input {
+	all: unset;
+	color: rgba(124, 137, 160, 1);
+	font-size: 1.4rem;
+	width: 36rem;
+	background-color: #3053ef;
+
+	@include screenMax("mobile") {
+		width: 75%;
+		input {
+			&::placeholder {
+				font-size: 1.6rem;
+			}
+		}
+	}
+}
+
+.inputButton {
+	@include screenMax("mobile") {
+		p {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,190 @@
+@import "@/styles/imports";
+
+.header {
+	padding: 2.4rem 8rem;
+	position: sticky;
+	top: 0;
+	width: 100%;
+	background-color: $col-primary;
+	transition: $all-transition;
+	z-index: 3;
+	.container {
+		max-width: $max-width;
+		margin-inline: auto;
+		@include flex(space-between, center, nowrap);
+		background-color: rgba(#fff, 0.05);
+		padding: 1.6rem 3.2rem;
+	}
+	a {
+		.header_logoContainer {
+			transition: $all-transition;
+		}
+	}
+	.header_nav {
+		min-width: 35%;
+		.header_navList {
+			@include flex(space-between, center, nowrap);
+			padding: 0;
+			margin: 0;
+			.header_navLink {
+				padding: 1rem 2.5rem;
+				a {
+					@extend %text-16;
+					text-transform: capitalize;
+					font-weight: 900;
+					transition: all 0.2s ease-out;
+					position: relative;
+					color: #b9b9b9;
+					cursor: pointer;
+					flex-shrink: 0;
+					&:hover {
+						color: $col-white;
+					}
+				}
+				&[data-active="true"] {
+					a {
+						transition: all 0.2s ease-out;
+						pointer-events: none;
+						color: $col-white;
+					}
+				}
+				@include screenMax("tablet") {
+					@include flex(flex-end, center, nowrap);
+				}
+			}
+		}
+	}
+	@include screenMax("tablet") {
+		padding: 3rem 2.4rem;
+		.header_nav {
+			margin-right: 0;
+			width: 100%;
+			.header_navList {
+				display: block;
+				padding: 0;
+				margin: 0;
+				.header_navLink {
+					padding: 1.7rem 0;
+					justify-content: flex-start;
+					a {
+						font-size: 1.6rem !important;
+						line-height: 2rem !important;
+						font-weight: 500;
+						transition: $all-transition;
+						color: rgba(93, 94, 103, 1);
+					}
+					&:not(:last-child) {
+						border-bottom: 0.1rem solid #3e3e3e;
+					}
+				}
+			}
+		}
+		.button_container {
+			width: 100%;
+			margin-top: 12rem;
+			.button {
+				width: 100%;
+				justify-content: center;
+			}
+		}
+	}
+	@include screenMax("tablet") {
+		.header_nav {
+			.header_navList {
+				.header_navLink {
+					a {
+						font-size: 2.4rem;
+						line-height: 3.6rem;
+					}
+				}
+			}
+		}
+	}
+}
+.header_wrapper,
+.header_wrapper__collapsed {
+	margin-left: 20%;
+	flex-grow: 1;
+	transition: transform 0.3s ease-out;
+	@include flex(space-between, center);
+
+	@include screenMax("tablet") {
+		order: 3;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		top: 10rem;
+		left: 0;
+		background-color: $col-primary;
+		z-index: 10;
+		padding: 4rem 7%;
+		margin-left: 0;
+		transform: translateX(0);
+		@include flex(flex-start, flex-end, column);
+	}
+}
+
+.header_wrapper__collapsed {
+	@include screenMax("tablet") {
+		transform: translateX(101vw);
+	}
+}
+
+.header_scrolled {
+	padding: 1.4rem 4.4rem 1rem;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+	transition: $all-transition;
+	@include screenMax("tablet") {
+		padding: 2.4rem 1.4rem;
+	}
+}
+
+.header_hamburger,
+.header_hamburger__open {
+	display: none;
+	position: relative;
+	cursor: pointer;
+	height: fit-content;
+	background: transparent;
+	border: none;
+	width: 45px;
+
+	@include screenMax("tablet") {
+		order: 2;
+		margin-left: auto;
+		@include flex(center, flex-end, column nowrap);
+	}
+
+	&Bar {
+		width: 35px;
+		height: 2px;
+		background-color: #fff;
+		margin: 0.4rem 0;
+		width: 35px;
+		opacity: 0.8;
+		transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+		&:nth-child(2) {
+			width: 30px;
+		}
+	}
+}
+
+.header_hamburger__open {
+	min-height: 2rem;
+	position: relative;
+
+	.header_hamburgerBar {
+		width: 20px;
+	}
+
+	.header_hamburgerBar:first-child {
+		margin-bottom: -1px;
+		transform: rotate(45deg);
+	}
+
+	.header_hamburgerBar:last-child {
+		margin-top: -1px;
+		transform: rotate(-45deg);
+	}
+}

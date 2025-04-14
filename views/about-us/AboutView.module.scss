@@ -1,0 +1,97 @@
+@import "@/styles/imports";
+
+.about {
+	padding: 9.6rem 8rem;
+	.container {
+		max-width: $max-width;
+		margin-inline: auto;
+		.row {
+			@include flex(space-between);
+			gap: 2.4rem;
+			padding-block: 4rem;
+			.text {
+				max-width: 83.5rem;
+				text-align: left;
+				h6 {
+					@extend %text-24;
+					color: #b9b9b9;
+					margin-bottom: 1rem;
+				}
+				a {
+					justify-self: flex-end;
+				}
+				ul {
+					margin-top: 2.4rem;
+					padding-left: 2.4rem;
+					list-style: disc;
+					li {
+						@extend %text-24;
+						color: #b9b9b9;
+						margin-bottom: 0.4rem;
+						list-style: disc;
+					}
+				}
+			}
+			&:first-child {
+				padding-top: 0;
+			}
+		}
+		.block {
+			margin-top: 9.6rem;
+			.title {
+				text-align: center;
+			}
+		}
+		.grid {
+			@include grid(repeat(3, 1fr), 2.4rem, 2.4rem);
+			width: 100%;
+			.card {
+				width: 100%;
+				// aspect-ratio: 1/1;
+				.image {
+					width: 100%;
+					height: 43.6rem;
+					position: relative;
+					margin-bottom: 1.2rem;
+				}
+				.text {
+					h3 {
+						@extend %text-14;
+						font-family: $font-monument;
+						margin-bottom: 0.8rem;
+						color: $col-white;
+					}
+					p {
+						@extend %text-12;
+						color: #b9b9b9;
+					}
+				}
+			}
+		}
+	}
+	@include screenMax("mobile") {
+		padding: 4rem 1.6rem;
+		.container {
+			.row {
+				flex-direction: column;
+				gap: 0;
+				.text {
+					text-align: left;
+					h6 {
+						font-size: 1.6rem;
+						line-height: 2.4rem;
+					}
+					ul {
+						li {
+							font-size: 1.6rem;
+							line-height: 2.4rem;
+						}
+					}
+				}
+			}
+			.grid {
+				grid-template-columns: 100%;
+			}
+		}
+	}
+}

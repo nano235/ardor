@@ -1,0 +1,135 @@
+@import "@/styles/imports";
+
+.accordion {
+	width: 100%;
+	padding: 1rem 2rem;
+	overflow: hidden;
+	.text {
+		h3 {
+			color: #fff;
+			font-weight: 700;
+			@extend %text-20;
+			font-family: $font-monument;
+		}
+		p {
+			@extend %text-18;
+			font-weight: 400;
+		}
+	}
+	.header {
+		@include flex();
+		gap: 1.6rem;
+		cursor: pointer;
+		padding: 2.8rem 0;
+		.button {
+			width: 5rem;
+			height: 5rem;
+			border-radius: 50%;
+			cursor: pointer;
+			outline: none;
+			&:focus {
+				outline: none;
+				box-shadow: none;
+			}
+			@include flex(center, center);
+			transition: all 0.3s ease-in-out;
+			&[data-active="true"] {
+				background-color: #784ffe;
+				transition: all 0.3s ease-in-out;
+				.chevron {
+					transform: rotate(90deg);
+					transition: all 0.3s ease-in-out;
+				}
+			}
+			.chevron {
+				position: relative;
+				width: 2.4rem;
+				height: 2.4rem;
+				transition: all 0.3s ease-in-out;
+			}
+			@include screenMax("mobile") {
+				width: 3rem;
+				height: 3rem;
+				.icon {
+					width: 1.2rem;
+					height: 1.2rem;
+				}
+			}
+		}
+		.plus_minus {
+			cursor: pointer;
+		}
+
+		.plus_sign,
+		.minus_sign {
+			width: 3rem;
+			height: 3rem;
+			position: relative;
+		}
+
+		.plus_sign:before,
+		.plus_sign:after,
+		.minus_sign:before {
+			content: "";
+			position: absolute;
+			background-color: #fff;
+			transition: transform 0.3s ease-out;
+		}
+
+		.plus_sign:before {
+			width: 1rem;
+			height: 0.2rem;
+			top: 1.4rem;
+			left: 1rem;
+		}
+
+		.plus_sign:after {
+			width: 0.2rem;
+			height: 1rem;
+			top: 1rem;
+			left: 1.4rem;
+		}
+
+		.minus_sign:before {
+			width: 1rem;
+			height: 0.2rem;
+			top: 1.4rem;
+			left: 1rem;
+			transform: rotate(180deg);
+		}
+
+		.minus_sign:after {
+			display: none;
+		}
+	}
+	.body {
+		width: 100%;
+		// padding-inline: 2rem;
+		max-height: 0;
+		overflow: hidden;
+		transition: all 0.5s ease-in-out;
+		@include screenMax("mobile") {
+			width: 90%;
+		}
+	}
+	&[data-active="true"] {
+		transition: all 0.5s ease-in-out;
+		height: auto;
+		background-color: #0834f8;
+		border-radius: 0.8rem;
+		.text {
+			p {
+				color: #fff;
+			}
+		}
+		.body {
+			max-height: 100rem;
+			transition: all 0.5s ease-in-out;
+			padding-bottom: 2.4rem;
+		}
+	}
+	transition: all 0.5s ease-in-out;
+	@include screenMax("mobile") {
+		padding: 2.4rem;
+	}
+}

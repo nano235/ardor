@@ -1,0 +1,63 @@
+@import "@/styles/imports";
+
+.contact {
+	padding: 9.6rem 8rem;
+	.container {
+		max-width: $max-width;
+		margin-inline: auto;
+		.row {
+			@include flex(space-between);
+			gap: 2.4rem;
+			.text {
+				max-width: 58rem;
+				text-align: right;
+				h6 {
+					@extend %text-18;
+					color: #b9b9b9;
+					margin-bottom: 1rem;
+				}
+				a {
+					justify-self: flex-end;
+				}
+			}
+		}
+		.form {
+			padding: 4.7rem 4rem;
+			background-color: #232323;
+			max-width: 84.6rem;
+			margin-top: 5.2rem;
+			margin-inline: auto;
+			form {
+				@include flex();
+				gap: 2.4rem;
+				flex-direction: column;
+				.button {
+					align-self: flex-end;
+				}
+			}
+		}
+	}
+	@include screenMax("mobile") {
+		padding: 4rem 1.6rem;
+		.container {
+			.row {
+				flex-direction: column;
+				.text {
+					text-align: left;
+					a {
+						justify-self: flex-start;
+					}
+				}
+			}
+			.form {
+				margin-top: 2.4rem;
+				padding: 2.4rem;
+				.button {
+					width: 100%;
+					align-self: center !important;
+					justify-content: center;
+				}
+			}
+		}
+	}
+}

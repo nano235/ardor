@@ -1,0 +1,53 @@
+@import "@/styles/imports";
+
+.process {
+	padding: 9.6rem 11.2rem;
+	.container {
+		max-width: $max-width;
+		margin-inline: auto;
+		@include grid(repeat(2, 1fr), 5.6rem, 2.4rem);
+		.reel {
+			width: 100%;
+			height: 100%;
+			background-color: $col-white;
+			border-radius: 1.6rem;
+		}
+		.mob_block {
+			display: none;
+		}
+		.link_container,
+		.mob_link_container {
+			padding: 1.6rem 2.4rem;
+			background-color: #232323;
+			max-width: 24rem;
+			margin-top: 4rem;
+			a {
+				margin: 0;
+			}
+		}
+		.mob_link_container {
+			display: none;
+		}
+	}
+	@include screenMax("mobile") {
+		padding: 4rem 1.6rem;
+		.container {
+			grid-template-columns: 100%;
+			.block {
+				display: none;
+			}
+			.mob_block {
+				display: block;
+				.title {
+					text-align: center;
+				}
+			}
+			.mob_link_container {
+				display: block;
+				margin-top: 2.4rem;
+				padding: 1.6rem;
+				margin-inline: auto;
+			}
+		}
+	}
+}
