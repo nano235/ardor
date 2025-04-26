@@ -6,13 +6,16 @@
 	.container {
 		max-width: $max-width;
 		margin-inline: auto;
-		overflow: hidden;
+		// overflow: hidden;
 	}
 	.row {
 		@include flex(space-between);
 		gap: 3.2rem;
 		.title {
 			max-width: 50%;
+			margin-top: -3rem;
+			z-index: 1;
+			position: relative;
 		}
 		.text {
 			max-width: 48.4rem;
@@ -22,7 +25,10 @@
 				text-align: right;
 			}
 			a {
-				margin-left: auto;
+				justify-content: flex-end;
+				p {
+					color: $col-white;
+				}
 			}
 		}
 	}
