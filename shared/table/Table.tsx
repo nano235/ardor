@@ -60,7 +60,7 @@ const Table: React.FC<TableProps> = ({
 													onEdit(
 														SettingsOperationType.EDIT,
 														row.id,
-														row.slug
+														row.Slug
 													)
 												}
 											>

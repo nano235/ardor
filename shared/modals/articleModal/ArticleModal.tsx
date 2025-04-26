@@ -68,8 +68,7 @@ const ArticleModal = ({
 	const { mutateAsync: deleteArticle, isPending: isDeleting } = useDeleteArticle();
 	const { mutateAsync: postUploadFile } = useUploadMedia();
 
-	const articleArr = (articleData?.data as IArticle[]) || null;
-	const article = articleArr[0] as IArticle | null;
+	const article = articleData?.data as IArticle;
 
 	const [displayedImages, setDisplayedImages] = useState<File[]>(
 		article?.images?.map(image => new File([], image)) || []

@@ -24,7 +24,7 @@ const CategoriesView = () => {
 		setOpenModal(true);
 		setModalTitle(title);
 		setModalId(id);
-		setModalSlug(slug || "");
+		setModalSlug(slug as string);
 	};
 
 	const articles = articleData?.data as IArticle[];
