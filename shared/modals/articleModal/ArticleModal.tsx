@@ -36,7 +36,7 @@ interface Props {
 	id?: string;
 }
 
-const MAX_FILE_SIZE = 30 * 1024 * 1024;
+// const MAX_FILE_SIZE = 30 * 1024 * 1024;
 
 const categoriesSchema = Yup.object().shape({
 	title: Yup.string(),
@@ -220,13 +220,13 @@ const ArticleModal = ({
 		const files = e.target.files;
 		if (files && files.length > 0) {
 			const validFiles = Array.from(files).filter(file => file instanceof File);
-			if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
-				return toast.error(
-					`${validFiles[0].name} exceeds max size of ${
-						MAX_FILE_SIZE / 1048576
-					}mb`
-				);
-			}
+			// if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
+			// 	return toast.error(
+			// 		`${validFiles[0].name} exceeds max size of ${
+			// 			MAX_FILE_SIZE / 1048576
+			// 		}mb`
+			// 	);
+			// }
 			if (validFiles.length > 0) {
 				const localArr = [...displayedImages, ...validFiles];
 				setDisplayedImages(localArr);
@@ -242,13 +242,13 @@ const ArticleModal = ({
 		const files = e.target.files;
 		if (files && files.length > 0) {
 			const validFiles = Array.from(files).filter(file => file instanceof File);
-			if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
-				return toast.error(
-					`${validFiles[0].name} exceeds max size of ${
-						MAX_FILE_SIZE / 1048576
-					}mb`
-				);
-			}
+			// if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
+			// 	return toast.error(
+			// 		`${validFiles[0].name} exceeds max size of ${
+			// 			MAX_FILE_SIZE / 1048576
+			// 		}mb`
+			// 	);
+			// }
 			if (validFiles.length > 0) {
 				setDisplayedVideos(validFiles[0]);
 			} else {
@@ -263,13 +263,13 @@ const ArticleModal = ({
 		const files = e.target.files;
 		if (files && files.length > 0) {
 			const validFiles = Array.from(files).filter(file => file instanceof File);
-			if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
-				return toast.error(
-					`${validFiles[0].name} exceeds max size of ${
-						MAX_FILE_SIZE / 1048576
-					}mb`
-				);
-			}
+			// if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
+			// 	return toast.error(
+			// 		`${validFiles[0].name} exceeds max size of ${
+			// 			MAX_FILE_SIZE / 1048576
+			// 		}mb`
+			// 	);
+			// }
 			if (validFiles.length > 0) {
 				setDisplayedVideoThumbnail(validFiles[0]);
 			} else {
@@ -318,13 +318,7 @@ const ArticleModal = ({
 								validationSchema={categoriesSchema}
 								onSubmit={handleSubmit}
 							>
-								{({
-									errors,
-									touched,
-									isSubmitting,
-									setFieldValue,
-									resetForm
-								}) => {
+								{({ errors, touched, isSubmitting, setFieldValue }) => {
 									return (
 										<Form>
 											<Field name="title">
