@@ -35,6 +35,7 @@
 				padding: 1rem 1.6rem;
 				background-color: #232323;
 				cursor: pointer;
+				text-transform: capitalize;
 				&[data-active="true"] {
 					background-color: #0834f8;
 					color: #fff;

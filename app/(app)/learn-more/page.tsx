@@ -1,7 +1,7 @@
 // import { LearnMoreView } from "@/views";
 import React, { Suspense, lazy } from "react";
 
-const LearnMoreView = lazy(() => import("../../views/learnMoreView/LearnMoreView"));
+const LearnMoreView = lazy(() => import("../../../views/learnMoreView/LearnMoreView"));
 
 export default function LearnMorePage() {
 	return (

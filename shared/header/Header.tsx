@@ -1,6 +1,5 @@
 "use client";
 
-import { navLinks } from "@/mock";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { Logo, Button } from "@/shared";
@@ -9,7 +8,11 @@ import styles from "./Header.module.scss";
 import { NavLink } from "@/interfaces";
 import { usePathname } from "next/navigation";
 
-const Header = () => {
+interface HeaderProps {
+	navLinks: NavLink[];
+}
+
+const Header = ({ navLinks }: HeaderProps) => {
 	// const router = useRouter();
 	const pathname = usePathname();
 	const [scroll, setScroll] = useState<boolean>(false);

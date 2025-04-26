@@ -5,7 +5,7 @@ import styles from "./InputField.module.scss";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
 	name?: string;
-	isPassword?: boolean;
+	// isPassword?: boolean;
 	className?: string;
 	error?: string;
 	label?: string;

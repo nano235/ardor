@@ -1,0 +1,86 @@
+@import "@/styles/imports";
+
+.modal {
+	padding-bottom: 0 !important;
+	overflow: hidden;
+	width: 44rem;
+	position: relative;
+	.body {
+		padding-bottom: 4rem;
+		padding-top: 2.4rem;
+		border-top: 0.1rem solid #232323;
+		@include flex();
+		flex-direction: column;
+		gap: 3.2rem;
+		form {
+			width: 100%;
+			.button {
+				margin-top: 3rem;
+			}
+		}
+		.text {
+			max-width: 36rem;
+			p {
+				color: #fff;
+			}
+		}
+		padding-bottom: 4rem;
+	}
+	.footer {
+		width: 100%;
+		z-index: 1;
+		left: 0;
+		bottom: 0;
+		position: absolute;
+		background-color: #232323;
+		border-bottom-right-radius: 1.6rem;
+		border-bottom-left-radius: 1.6rem;
+		padding: 1.6rem 4rem;
+		.small_row {
+			@include flex(flex-start, center);
+			gap: 0.8rem;
+			.button {
+				&:last-child {
+					background-color: #fff;
+					border: 0.1rem solid #232323;
+				}
+			}
+			&[data-type="Delete"] {
+				.button {
+					background-color: #ff0000;
+					&:last-child {
+						background-color: #fff;
+						border: 0.1rem solid #232323;
+					}
+				}
+			}
+		}
+	}
+	@include screenMax("mobile") {
+		.body {
+			.form {
+				flex-direction: column-reverse;
+				.inputs_block {
+					width: 100%;
+				}
+			}
+			.grid_row,
+			.row {
+				grid-template-columns: 1fr;
+				margin-bottom: 2.4rem;
+			}
+		}
+		.footer {
+			background-color: transparent;
+			border: none;
+			margin-inline: 0;
+			padding-inline: 0;
+			.small_row {
+				width: 100%;
+				.button {
+					width: 100%;
+				}
+			}
+		}
+	}
+}

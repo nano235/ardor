@@ -26,3 +26,13 @@ export interface NavLink {
 	button?: string;
 	icon?: string;
 }
+export enum SettingsOperationType {
+	RESTORE = "Restore",
+	BAN = "Ban",
+	ADD = "Add",
+	EDIT = "Edit",
+	DELETE = "Delete",
+	DECLINE = "Decline",
+	APPROVE = "Approve",
+	CREATE = "Create"
+}

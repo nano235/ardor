@@ -1,0 +1,105 @@
+@import "@/styles/imports";
+
+.section {
+	@extend %center;
+	.input {
+		margin-bottom: 1.6rem;
+	}
+	.text {
+		margin-top: 3.2rem;
+		a,
+		p {
+			font-weight: 500;
+		}
+		p {
+			color: white;
+		}
+		a {
+			color: white;
+		}
+	}
+	.loader {
+		position: fixed;
+		width: 100vw;
+		height: 100dvh;
+		inset: 0;
+		backdrop-filter: blur(6px);
+		z-index: 10;
+	}
+	.block {
+		display: block;
+	}
+	.small_row {
+		@include flex(flex-start, center);
+		gap: 0.8rem;
+	}
+	.select {
+		border-radius: 0.4rem;
+		margin-bottom: 1.6rem;
+		width: 100%;
+	}
+	.row {
+		@include grid(repeat(2, 1fr), 0.8rem);
+	}
+	.container {
+		width: 48rem;
+		padding: 4rem;
+		border: 0.1rem solid #232323;
+		border-radius: 1.6rem;
+		background-color: #232323;
+		.title {
+			margin-bottom: 3.2rem;
+			h3 {
+				@extend %text-18;
+				font-weight: 600;
+				color: white;
+			}
+			p {
+				@extend %text-14;
+				color: white;
+			}
+		}
+		.button {
+			width: 100%;
+			justify-content: center;
+		}
+		.divider {
+			width: 100%;
+			gap: 1.6rem;
+			height: 0.1rem;
+			margin-block: 3.2rem;
+			background-color: #232323;
+		}
+		.button_container {
+			width: 100%;
+			@include grid(repeat(2, 1fr), 0.8rem);
+			.button {
+				width: 100%;
+				border: 0.1rem solid #232323;
+				border-radius: 0.4rem;
+				@include flex(center, center);
+				gap: 0.8rem;
+				p {
+					font-weight: 500;
+				}
+				.icon {
+					position: relative;
+					width: 2rem;
+					height: 2rem;
+				}
+			}
+		}
+		.link_container {
+			margin-top: 2.4rem;
+			a {
+				font-weight: 500;
+			}
+		}
+		@include screenMax("mobile") {
+			width: 100%;
+			border: none;
+			background-color: transparent;
+			padding: 0;
+		}
+	}
+}

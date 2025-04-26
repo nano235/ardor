@@ -8,6 +8,13 @@ import Title from "./title/Title";
 import Slider from "./slider/Slider";
 import Footer from "./footer/Footer";
 import TextArea from "./textArea/TextArea";
+import Modal from "./modals/modal/Modal";
+import CategoryModal from "./modals/categoryModal/CategoryModal";
+import Table from "./table/Table";
+import Select from "./selects/select/Select";
+import AdvancedSelect from "./selects/advancedSelect/AdvancedSelect";
+import CustomImage from "./customImage/CustomImage";
+import ArticleModal from "./modals/articleModal/ArticleModal";
 
 export {
 	Logo,
@@ -19,5 +26,12 @@ export {
 	Accordion,
 	Slider,
 	Footer,
-	TextArea
+	TextArea,
+	Modal,
+	CategoryModal,
+	Table,
+	Select,
+	AdvancedSelect,
+	CustomImage,
+	ArticleModal
 };

@@ -31,6 +31,19 @@ export const navLinks: NavLink[] = [
 	}
 ];
 
+export const adminNavLinks: NavLink[] = [
+	{
+		label: "categories",
+		href: "/admin/categories",
+		external: false
+	},
+	{
+		label: "articles",
+		href: "/admin/articles",
+		external: false
+	}
+];
+
 export const socialMediaLinks = [
 	{
 		label: "x",

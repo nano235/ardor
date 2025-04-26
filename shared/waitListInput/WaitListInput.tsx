@@ -54,7 +54,7 @@ const WaitListInput = () => {
 						type="submit"
 						disabled={state === "Loading"}
 					>
-						<p>Subscribe</p>
+						Subscribe
 					</Button>
 				</div>
 				{state === "Error" && (
