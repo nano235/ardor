@@ -17,7 +17,44 @@ const ProjectView = () => {
 	const handleBack = () => {
 		router.back();
 	};
-	console.log(article);
+	const details = [
+		{
+			title: "Client",
+			value: article?.client
+		},
+		article?.agency && {
+			title: "Agency",
+			value: article?.agency
+		},
+		article?.productionTime && {
+			title: "Production Time",
+			value: article?.productionTime
+		},
+		article?.videoType && {
+			title: "Video Type",
+			value: article?.videoType
+		},
+		article?.attendance && {
+			title: "Attendance",
+			value: article?.attendance
+		},
+		article?.projectType && {
+			title: "Project Type",
+			value: article?.projectType
+		},
+		article?.metrics && {
+			title: "Metrics",
+			value: article?.metrics
+		},
+		article?.website && {
+			title: "Website",
+			value: article?.website
+		},
+		article?.credit && {
+			title: "Credit",
+			value: article?.credit
+		}
+	].filter(Boolean);
 	return (
 		<div className={styles.project}>
 			<div className={styles.container}>
@@ -41,22 +78,14 @@ const ProjectView = () => {
 						<p>{article?.description}</p>
 					</div>
 					<div className={styles.grid}>
-						<div className={styles.text}>
-							<h3>Client</h3>
-							<p>{article?.client}</p>
-						</div>
-						<div className={styles.text}>
-							<h3>Agency</h3>
-							<p>{article?.agency}</p>
-						</div>
-						<div className={styles.text}>
-							<h3>Production Time</h3>
-							<p>{article?.productionTime}</p>
-						</div>
-						<div className={styles.text}>
-							<h3>Video Type</h3>
-							<p>{article?.videoType}</p>
-						</div>
+						{details.map(detail =>
+							typeof detail === "object" && detail.title ? (
+								<div className={styles.text} key={detail.title}>
+									<h3>{detail.title}</h3>
+									<p>{detail.value}</p>
+								</div>
+							) : null
+						)}
 					</div>
 				</div>
 				<div className={styles.row}>
@@ -76,12 +105,8 @@ const ProjectView = () => {
 					</div>
 				</div>
 				<div className={styles.photo_grid}>
-					{article?.images?.map((image, index) => (
-						<div
-							className={styles.photo}
-							key={image}
-							style={{ gridColumn: index === 0 ? "span 2" : "span 1" }}
-						>
+					{article?.images?.map(image => (
+						<div className={styles.photo} key={image}>
 							<Image src={image} alt="photo" fill />
 						</div>
 					))}

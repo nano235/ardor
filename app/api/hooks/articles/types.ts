@@ -8,7 +8,6 @@ export interface Video {
 export interface IArticle {
 	title?: string;
 	description?: string;
-	content?: string;
 	client?: string;
 	agency?: string;
 	productionTime?: string;
@@ -24,6 +23,11 @@ export interface IArticle {
 	updatedAt?: Date;
 	_id?: string;
 	id?: string;
+	credit?: string;
+	website?: string;
+	attendance?: string;
+	projectType?: string;
+	metrics?: string;
 }
 
 export interface IArticleResponse {

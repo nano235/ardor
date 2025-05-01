@@ -39,17 +39,21 @@ interface Props {
 // const MAX_FILE_SIZE = 30 * 1024 * 1024;
 
 const categoriesSchema = Yup.object().shape({
-	title: Yup.string(),
-	description: Yup.string(),
-	content: Yup.string(),
-	categories: Yup.array().of(Yup.string()),
+	title: Yup.string().required("Title is required"),
+	description: Yup.string().required("Description is required"),
+	categories: Yup.array().of(Yup.string()).required("Categories are required"),
 	featured: Yup.boolean(),
-	client: Yup.string(),
+	client: Yup.string().required("Client is required"),
 	agency: Yup.string(),
 	productionTime: Yup.string(),
 	videoType: Yup.string(),
-	challenges: Yup.array().of(Yup.string()),
-	solutions: Yup.array().of(Yup.string())
+	challenges: Yup.array().of(Yup.string()).required("Challenges are required"),
+	solutions: Yup.array().of(Yup.string()).required("Solutions are required"),
+	credit: Yup.string(),
+	website: Yup.string(),
+	attendance: Yup.string(),
+	projectType: Yup.string(),
+	metrics: Yup.string()
 });
 
 const ArticleModal = ({
@@ -73,8 +77,8 @@ const ArticleModal = ({
 	const [displayedImages, setDisplayedImages] = useState<File[]>(
 		article?.images?.map(image => new File([], image)) || []
 	);
-	const [displayedVideos, setDisplayedVideos] = useState<File | null>(
-		article?.videos?.length ? new File([], article?.videos[0]?.url) : null
+	const [displayedVideos, setDisplayedVideos] = useState<string>(
+		article?.videos?.length ? article?.videos[0].url : ""
 	);
 	const [displayedVideoThumbnail, setDisplayedVideoThumbnail] = useState<File | null>(
 		article?.videos?.length ? new File([], article?.videos[0]?.thumbnail) : null
@@ -82,7 +86,6 @@ const ArticleModal = ({
 	const initialValues: IArticle = {
 		title: article?.title,
 		description: article?.description,
-		content: article?.content,
 		categories: article?.categories,
 		featured: article?.featured,
 		client: article?.client,
@@ -93,7 +96,12 @@ const ArticleModal = ({
 		solutions: article?.solutions,
 		images: article?.images,
 		videos: article?.videos,
-		_id: article?._id
+		_id: article?._id,
+		credit: article?.credit,
+		website: article?.website,
+		attendance: article?.attendance,
+		projectType: article?.projectType,
+		metrics: article?.metrics
 	};
 
 	const handleDelete = async () => {
@@ -138,18 +146,18 @@ const ArticleModal = ({
 					return;
 				}
 			}
-			if (displayedVideos) {
-				try {
-					const videoUploadRes = await postUploadFile([displayedVideos]);
-					if (!videoUploadRes || !videoUploadRes.length) {
-						throw new Error("Failed to upload videos");
-					}
-					media.videos = videoUploadRes.map((upload: any) => upload.url);
-				} catch (uploadError: any) {
-					toast.error(uploadError?.message || "Failed to upload videos");
-					return;
-				}
-			}
+			// if (displayedVideos) {
+			// 	try {
+			// 		const videoUploadRes = await postUploadFile([displayedVideos]);
+			// 		if (!videoUploadRes || !videoUploadRes.length) {
+			// 			throw new Error("Failed to upload videos");
+			// 		}
+			// 		media.videos = videoUploadRes.map((upload: any) => upload.url);
+			// 	} catch (uploadError: any) {
+			// 		toast.error(uploadError?.message || "Failed to upload videos");
+			// 		return;
+			// 	}
+			// }
 			if (displayedVideoThumbnail) {
 				try {
 					const videoThumbnailUploadRes = await postUploadFile([
@@ -168,29 +176,35 @@ const ArticleModal = ({
 			const payload = {
 				title: values.title,
 				description: values.description,
-				content: values.content,
 				categories: values.categories,
 				featured: values.featured,
 				client: values.client,
 				agency: values.agency,
 				images: media.images,
-				videos: [{ url: media.videos[0], thumbnail: media.thumbnail }],
+				videos: [{ url: displayedVideos, thumbnail: media.thumbnail }],
 				challenges: values.challenges,
 				solutions: values.solutions,
 				productionTime: values.productionTime,
-				videoType: values.videoType
+				videoType: values.videoType,
+				credit: values.credit,
+				website: values.website,
+				attendance: values.attendance,
+				projectType: values.projectType,
+				metrics: values.metrics
 			};
 			if (title === SettingsOperationType.EDIT) {
 				const res = await patchArticle(payload);
 				if (res) {
 					toast.success("Article updated successfully");
 					refetch();
+					setOpenModal(false);
 				}
 			} else {
 				const res = await postArticle(payload);
 				if (res) {
 					toast.success("Article created successfully");
 					refetch();
+					setOpenModal(false);
 				}
 			}
 		} catch (error: unknown) {
@@ -238,26 +252,26 @@ const ArticleModal = ({
 		}
 	};
 
-	const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const files = e.target.files;
-		if (files && files.length > 0) {
-			const validFiles = Array.from(files).filter(file => file instanceof File);
-			// if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
-			// 	return toast.error(
-			// 		`${validFiles[0].name} exceeds max size of ${
-			// 			MAX_FILE_SIZE / 1048576
-			// 		}mb`
-			// 	);
-			// }
-			if (validFiles.length > 0) {
-				setDisplayedVideos(validFiles[0]);
-			} else {
-				toast.error("No valid File objects were selected");
-			}
-		} else {
-			toast.error("No files selected");
-		}
-	};
+	// const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const files = e.target.files;
+	// 	if (files && files.length > 0) {
+	// 		const validFiles = Array.from(files).filter(file => file instanceof File);
+	// 		// if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
+	// 		// 	return toast.error(
+	// 		// 		`${validFiles[0].name} exceeds max size of ${
+	// 		// 			MAX_FILE_SIZE / 1048576
+	// 		// 		}mb`
+	// 		// 	);
+	// 		// }
+	// 		if (validFiles.length > 0) {
+	// 			setDisplayedVideos(validFiles[0]);
+	// 		} else {
+	// 			toast.error("No valid File objects were selected");
+	// 		}
+	// 	} else {
+	// 		toast.error("No files selected");
+	// 	}
+	// };
 
 	const handleVideoThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const files = e.target.files;
@@ -280,7 +294,6 @@ const ArticleModal = ({
 		}
 	};
 
-	console.log(displayedImages, displayedVideos, displayedVideoThumbnail);
 	return (
 		<Modal
 			title={`${title}`}
@@ -358,25 +371,6 @@ const ArticleModal = ({
 													/>
 												)}
 											</Field>
-											<Field name="content">
-												{({ field }: FieldProps) => (
-													<InputField
-														{...field}
-														label="Content"
-														placeholder={
-															article?.content ||
-															"Enter content"
-														}
-														className={styles.input}
-														error={
-															(touched.content &&
-																errors.content) ||
-															""
-														}
-														type="text"
-													/>
-												)}
-											</Field>
 											<Field name="categories">
 												{({ field }: FieldProps) => (
 													<AdvancedSelect
@@ -411,7 +405,7 @@ const ArticleModal = ({
 												{({ field }: FieldProps) => (
 													<InputField
 														{...field}
-														label="Featured"
+														label="Featured (optional)"
 														placeholder={
 															article?.featured
 																? "True"
@@ -439,11 +433,101 @@ const ArticleModal = ({
 													/>
 												)}
 											</Field>
+											<Field name="credit">
+												{({ field }: FieldProps) => (
+													<InputField
+														{...field}
+														label="Credit (optional)"
+														placeholder={
+															article?.credit ||
+															"Enter credit"
+														}
+														className={styles.input}
+														error={
+															(touched.credit &&
+																errors.credit) ||
+															""
+														}
+													/>
+												)}
+											</Field>
+											<Field name="website">
+												{({ field }: FieldProps) => (
+													<InputField
+														{...field}
+														label="Website (optional)"
+														placeholder={
+															article?.website ||
+															"Enter website"
+														}
+														className={styles.input}
+														error={
+															(touched.website &&
+																errors.website) ||
+															""
+														}
+													/>
+												)}
+											</Field>
+											<Field name="attendance">
+												{({ field }: FieldProps) => (
+													<InputField
+														{...field}
+														label="Attendance (optional)"
+														placeholder={
+															article?.attendance ||
+															"Enter attendance"
+														}
+														className={styles.input}
+														error={
+															(touched.attendance &&
+																errors.attendance) ||
+															""
+														}
+													/>
+												)}
+											</Field>
+											<Field name="projectType">
+												{({ field }: FieldProps) => (
+													<InputField
+														{...field}
+														label="Project Type (optional)"
+														placeholder={
+															article?.projectType ||
+															"Enter project type"
+														}
+														className={styles.input}
+														error={
+															(touched.projectType &&
+																errors.projectType) ||
+															""
+														}
+													/>
+												)}
+											</Field>
+											<Field name="metrics">
+												{({ field }: FieldProps) => (
+													<InputField
+														{...field}
+														label="Metrics (optional)"
+														placeholder={
+															article?.metrics ||
+															"Enter metrics"
+														}
+														className={styles.input}
+														error={
+															(touched.metrics &&
+																errors.metrics) ||
+															""
+														}
+													/>
+												)}
+											</Field>
 											<Field name="agency">
 												{({ field }: FieldProps) => (
 													<InputField
 														{...field}
-														label="Agency"
+														label="Agency (optional)"
 														placeholder={
 															article?.agency ||
 															"Enter agency"
@@ -461,7 +545,7 @@ const ArticleModal = ({
 												{({ field }: FieldProps) => (
 													<InputField
 														{...field}
-														label="Production Time"
+														label="Production Time (optional)"
 														placeholder={
 															article?.productionTime ||
 															"Enter production time"
@@ -479,7 +563,7 @@ const ArticleModal = ({
 												{({ field }: FieldProps) => (
 													<InputField
 														{...field}
-														label="Video Type"
+														label="Video Type (optional)"
 														placeholder={
 															article?.videoType ||
 															"Enter video type"
@@ -610,6 +694,33 @@ const ArticleModal = ({
 													/>
 												)}
 											</Field>
+											<Field name="videoUrl">
+												{({ field }: FieldProps) => (
+													<InputField
+														{...field}
+														label="Video url"
+														placeholder={
+															article?.videos?.[0]?.url ||
+															"Enter video url"
+														}
+														className={styles.input}
+														onChange={e => {
+															// setFieldValue(
+															// 	"videoUrl",
+															// 	e.target.value
+															// );
+															setDisplayedVideos(
+																e.target.value
+															);
+														}}
+														error={
+															(touched.videos &&
+																errors.videos) ||
+															""
+														}
+													/>
+												)}
+											</Field>
 											<div className={styles.image_container}>
 												<div
 													className={styles.addimage_container}
@@ -680,7 +791,7 @@ const ArticleModal = ({
 													)}
 												</div>
 											</div>
-											<div className={styles.image_container}>
+											{/* <div className={styles.image_container}>
 												<div
 													className={styles.addimage_container}
 												>
@@ -741,7 +852,7 @@ const ArticleModal = ({
 														</div>
 													)}
 												</div>
-											</div>
+											</div> */}
 											<div className={styles.image_container}>
 												<div
 													className={styles.addimage_container}

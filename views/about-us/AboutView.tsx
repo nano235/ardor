@@ -8,19 +8,22 @@ const AboutView = () => {
 		<div className={styles.about}>
 			<div className={styles.container}>
 				<div className={styles.row}>
-					<Title title="Who we are" />
+					<Title title="Who are we?" />
 					<div className={styles.text}>
 						<h6>
 							Ardor Studio is a motion design and video editing studio
 							dedicated to crafting visually compelling stories that
-							captivate audiences. With a team of expert designers and
-							editors, we specialize in creating high-quality motion
-							graphics, animated explainers, brand videos, and cinematic
-							edits for businesses, brands, and content creators worldwide.
+							captivate audiences. We believe in emotion-driven
+							storytelling, where every motion graphic and edit is designed
+							to resonate with your audience. Our process is built on
+							collaboration, creativity, and precision, ensuring every
+							project delivers impact. Whether you need a sleek corporate
+							video or a dynamic social media ad, we tailor our work to fit
+							your brand’s vision.
 						</h6>
 					</div>
 				</div>
-				<div className={styles.row}>
+				{/* <div className={styles.row}>
 					<Title title="WHAT WE DO" />
 					<div className={styles.text}>
 						<h6>
@@ -62,7 +65,7 @@ const AboutView = () => {
 							tailor our work to fit your brand’s vision.
 						</h6>
 					</div>
-				</div>
+				</div> */}
 				<div className={styles.block}>
 					<Title title="Meet Our Team" className={styles.title} />
 					<div className={styles.grid}>

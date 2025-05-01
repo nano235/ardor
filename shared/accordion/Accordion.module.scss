@@ -4,6 +4,7 @@
 	width: 100%;
 	padding: 1rem 2rem;
 	overflow: hidden;
+	border-bottom: 0.1rem solid #dedfe0;
 	.text {
 		h3 {
 			color: #fff;
@@ -75,6 +76,10 @@
 			background-color: #fff;
 			transition: transform 0.3s ease-out;
 		}
+		.plus_sign:before,
+		.plus_sign:after {
+			background-color: #0834f8;
+		}
 
 		.plus_sign:before {
 			width: 1rem;
@@ -117,6 +122,7 @@
 		height: auto;
 		background-color: #0834f8;
 		border-radius: 0.8rem;
+		border-color: #0834f8;
 		.text {
 			p {
 				color: #fff;
