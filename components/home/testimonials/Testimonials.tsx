@@ -9,68 +9,70 @@ import { useState } from "react";
 import styles from "./Testimonials.module.scss";
 import Title from "@/shared/title/Title";
 import Image from "next/image";
-
-const testimonials = [
-	{
-		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
-		reviewer: {
-			name: "Mr. Precious",
-			avatar: "/images/precious.png",
-			role: "Marketing Director, Tech Startup"
-		}
-	},
-	{
-		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
-		reviewer: {
-			name: "Mr. Precious",
-			avatar: "/images/precious.png",
-			role: "Marketing Director, Tech Startup"
-		}
-	},
-	{
-		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
-		reviewer: {
-			name: "Mr. Precious",
-			avatar: "/images/precious.png",
-			role: "Marketing Director, Tech Startup"
-		}
-	},
-	,
-	{
-		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
-		reviewer: {
-			name: "Mr. Precious",
-			avatar: "/images/precious.png",
-			role: "Marketing Director, Tech Startup"
-		}
-	},
-	{
-		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
-		reviewer: {
-			name: "Mr. Precious",
-			avatar: "/images/precious.png",
-			role: "Marketing Director, Tech Startup"
-		}
-	},
-	{
-		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
-		reviewer: {
-			name: "Mr. Precious",
-			avatar: "/images/precious.png",
-			role: "Marketing Director, Tech Startup"
-		}
-	},
-	{
-		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
-		reviewer: {
-			name: "Mr. Precious",
-			avatar: "/images/precious.png",
-			role: "Marketing Director, Tech Startup"
-		}
-	}
-];
+import { useGetTestimonials } from "@/app/api/hooks/testimonials";
+import { PageLoader } from "@/shared/loaders";
+// const testimonials = [
+// 	{
+// 		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
+// 		reviewer: {
+// 			name: "Mr. Precious",
+// 			avatar: "/images/precious.png",
+// 			role: "Marketing Director, Tech Startup"
+// 		}
+// 	},
+// 	{
+// 		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
+// 		reviewer: {
+// 			name: "Mr. Precious",
+// 			avatar: "/images/precious.png",
+// 			role: "Marketing Director, Tech Startup"
+// 		}
+// 	},
+// 	{
+// 		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
+// 		reviewer: {
+// 			name: "Mr. Precious",
+// 			avatar: "/images/precious.png",
+// 			role: "Marketing Director, Tech Startup"
+// 		}
+// 	},
+// 	,
+// 	{
+// 		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
+// 		reviewer: {
+// 			name: "Mr. Precious",
+// 			avatar: "/images/precious.png",
+// 			role: "Marketing Director, Tech Startup"
+// 		}
+// 	},
+// 	{
+// 		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
+// 		reviewer: {
+// 			name: "Mr. Precious",
+// 			avatar: "/images/precious.png",
+// 			role: "Marketing Director, Tech Startup"
+// 		}
+// 	},
+// 	{
+// 		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
+// 		reviewer: {
+// 			name: "Mr. Precious",
+// 			avatar: "/images/precious.png",
+// 			role: "Marketing Director, Tech Startup"
+// 		}
+// 	},
+// 	{
+// 		review: "Working withArdors studio was a game-changer! Their motion design and video editing took our brand to the next level. Highly recommended!",
+// 		reviewer: {
+// 			name: "Mr. Precious",
+// 			avatar: "/images/precious.png",
+// 			role: "Marketing Director, Tech Startup"
+// 		}
+// 	}
+// ];
 const Testimonials = () => {
 	const [slides, setSlides] = useState<number>(2);
+	const { data: testimonials, isLoading } = useGetTestimonials();
 
 	useEffect(() => {
 		if (window.innerWidth <= 600) {
@@ -103,39 +105,41 @@ const Testimonials = () => {
 						loop
 						// navigation
 					>
-						{testimonials.map((review, index: number) => (
-							<SwiperSlide key={index}>
-								<div className={styles.slide}>
-									<div className={styles.quote}>
-										<Image
-											src="/svgs/quote.svg"
-											fill
-											alt=""
-											sizes="100vw"
-										/>
-									</div>
-									<div className={styles.row}>
-										<div className={styles.text}>
-											<h2>{review?.review}</h2>
+						{isLoading ? (
+							<PageLoader />
+						) : (
+							testimonials?.data.map((review, index: number) => (
+								<SwiperSlide key={index}>
+									<div className={styles.slide}>
+										<div className={styles.quote}>
+											<Image
+												src="/svgs/quote.svg"
+												fill
+												alt=""
+												sizes="100vw"
+											/>
 										</div>
-										{review && (
+										<div className={styles.row}>
+											<div className={styles.text}>
+												<h2>{review?.description}</h2>
+											</div>
 											<div className={styles.avatar}>
 												<Image
-													src={review.reviewer.avatar}
-													alt={review.reviewer.name}
+													src={review?.image || ""}
+													alt={review?.name || ""}
 													fill
 													sizes="100vw"
 												/>
 											</div>
-										)}
-										<div className={styles.text}>
-											<h3>{review?.reviewer.name}</h3>
-											<p>{review?.reviewer.role}</p>
+											<div className={styles.text}>
+												<h3>{review?.name}</h3>
+												<p>{review?.role}</p>
+											</div>
 										</div>
 									</div>
-								</div>
-							</SwiperSlide>
-						))}
+								</SwiperSlide>
+							))
+						)}
 					</Swiper>
 				</div>
 			</div>

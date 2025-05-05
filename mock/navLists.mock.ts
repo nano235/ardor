@@ -33,6 +33,21 @@ export const navLinks: NavLink[] = [
 
 export const adminNavLinks: NavLink[] = [
 	{
+		label: "general",
+		href: "/admin/general",
+		external: false
+	},
+	{
+		label: "testimonials",
+		href: "/admin/testimonials",
+		external: false
+	},
+	{
+		label: "careers",
+		href: "/admin/careers",
+		external: false
+	},
+	{
 		label: "categories",
 		href: "/admin/categories",
 		external: false

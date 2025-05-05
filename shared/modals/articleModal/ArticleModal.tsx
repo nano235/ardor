@@ -36,7 +36,11 @@ interface Props {
 	id?: string;
 }
 
-// const MAX_FILE_SIZE = 30 * 1024 * 1024;
+interface UploadResult {
+	url: string;
+	public_id: string;
+	resource_type: string;
+}
 
 const categoriesSchema = Yup.object().shape({
 	title: Yup.string().required("Title is required"),
@@ -140,24 +144,16 @@ const ArticleModal = ({
 					if (!imgUploadRes || !imgUploadRes.length) {
 						throw new Error("Failed to upload images");
 					}
-					media.images = imgUploadRes.map((upload: any) => upload.url);
-				} catch (uploadError: any) {
-					toast.error(uploadError?.message || "Failed to upload images");
+					media.images = imgUploadRes.map((upload: UploadResult) => upload.url);
+				} catch (uploadError: Error | unknown) {
+					const errorMessage =
+						uploadError instanceof Error
+							? uploadError.message
+							: "Failed to upload images";
+					toast.error(errorMessage);
 					return;
 				}
 			}
-			// if (displayedVideos) {
-			// 	try {
-			// 		const videoUploadRes = await postUploadFile([displayedVideos]);
-			// 		if (!videoUploadRes || !videoUploadRes.length) {
-			// 			throw new Error("Failed to upload videos");
-			// 		}
-			// 		media.videos = videoUploadRes.map((upload: any) => upload.url);
-			// 	} catch (uploadError: any) {
-			// 		toast.error(uploadError?.message || "Failed to upload videos");
-			// 		return;
-			// 	}
-			// }
 			if (displayedVideoThumbnail) {
 				try {
 					const videoThumbnailUploadRes = await postUploadFile([
@@ -167,10 +163,13 @@ const ArticleModal = ({
 						throw new Error("Failed to upload video thumbnail");
 					}
 					media.thumbnail = videoThumbnailUploadRes[0].url;
-				} catch (uploadError: any) {
-					toast.error(
-						uploadError?.message || "Failed to upload video thumbnail"
-					);
+				} catch (uploadError: Error | unknown) {
+					const errorMessage =
+						uploadError instanceof Error
+							? uploadError.message
+							: "Failed to upload video thumbnail";
+					toast.error(errorMessage);
+					return;
 				}
 			}
 			const payload = {

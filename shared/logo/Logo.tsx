@@ -1,18 +1,21 @@
+"use client";
+
 import styles from "./Logo.module.scss";
 import React from "react";
 
 import Image from "next/image";
-
+import { useGetGeneral } from "@/app/api/hooks/general";
 interface Props {
 	className?: string;
 	type?: "main" | "footer";
 }
 
-const Logo = ({ className, type = "main" }: Props) => {
+const Logo = ({ className }: Props) => {
+	const { data: general } = useGetGeneral();
 	return (
 		<div className={`${styles.logo} ${className}`}>
 			<Image
-				src={`/images/${type === "main" ? "logo" : "footer-logo"}.png`}
+				src={general?.data?.logo || ""}
 				loading="eager"
 				priority={true}
 				alt="Ardor"

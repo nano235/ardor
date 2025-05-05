@@ -11,6 +11,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	className?: string;
 	href?: string;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	icon?: string;
 }
 
 const Button = ({
@@ -19,6 +20,7 @@ const Button = ({
 	href,
 	onClick,
 	buttonType,
+	icon,
 	...otherProps
 }: Props) => {
 	const router = useRouter();
@@ -39,7 +41,7 @@ const Button = ({
 			{...otherProps}
 		>
 			<figure className={styles.button_icon}>
-				<Image src={"/svgs/arrow.svg"} layout="fill" alt="" />
+				<Image src={icon || "/svgs/arrow.svg"} layout="fill" alt="" />
 			</figure>
 			<p>{children}</p>
 		</button>

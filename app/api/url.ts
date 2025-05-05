@@ -5,5 +5,8 @@ export const API_URL = {
 	user: "/users",
 	category: "/categories",
 	article: "/articles",
-	uploadFiles: "/media/upload"
+	uploadFiles: "/media/upload",
+	testimonial: "/testimonials",
+	career: "/careers",
+	general: "/general"
 };
