@@ -1,17 +1,7 @@
 import { api } from "../../api";
-import { useMutation, UseMutationOptions, useQuery } from "@tanstack/react-query";
+import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { API_URL } from "../../url";
-import { IGeneralResponse, IGeneral } from "./type";
-
-const useGetGeneral = () => {
-	return useQuery<IGeneralResponse, Error>({
-		queryKey: ["general"],
-		queryFn: async () => {
-			const response = await api.get(API_URL.general);
-			return response.data;
-		}
-	});
-};
+import { IGeneral } from "./type";
 
 const usePostGeneral = (
 	options?: Omit<UseMutationOptions<IGeneral, Error, IGeneral>, "mutationFn">
@@ -49,4 +39,4 @@ const useDeleteGeneral = (
 	});
 };
 
-export { useGetGeneral, usePostGeneral, usePatchGeneral, useDeleteGeneral };
+export { usePostGeneral, usePatchGeneral, useDeleteGeneral };

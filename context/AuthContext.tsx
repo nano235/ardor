@@ -2,7 +2,7 @@
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { AuthProviderProps, ProtectRouteProps } from "./types";
-import { removeAuthToken, setAuthToken } from "@/utils/tokenStorage";
+import { removeAuthToken } from "@/utils/tokenStorage";
 import { DefaultProviderType } from "./types";
 // import { useGetUser, useGetVerifyToken } from "@/app/api/hooks/users";
 import { useAppDispatch, useAppSelector } from "@/store/configureStore";

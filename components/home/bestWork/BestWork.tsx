@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./BestWork.module.scss";
 import { CustomLink, Title } from "@/shared";
 import { useGetArticleByCategory, useGetArticles } from "@/app/api/hooks/articles";
@@ -9,7 +9,12 @@ import Image from "next/image";
 import { PageLoader } from "@/shared/loaders";
 import Link from "next/link";
 import { IArticle } from "@/app/api/hooks/articles/types";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
 const BestWork = () => {
+	const mainRef = useRef<HTMLDivElement>(null);
 	const { data: articlesData, isFetching: isFetchingArticles } = useGetArticles();
 	const { data: categoriesData } = useGetCategories();
 	const categories = categoriesData?.data || [];
@@ -21,8 +26,85 @@ const BestWork = () => {
 		activeCategory === "all"
 			? (articlesData?.data as IArticle[])
 			: (filteredArticles?.data as IArticle[]);
+
+	useEffect(() => {
+		const container = mainRef.current;
+		const title = container?.querySelector(`.${styles.title}`) as HTMLElement;
+		const categoriesArr = container?.querySelector(
+			`.${styles.categories}`
+		) as HTMLElement;
+		const cards = container?.querySelectorAll(
+			`.${styles.card}`
+		) as NodeListOf<HTMLElement>;
+		const button = container?.querySelector(
+			`.${styles.link_container}`
+		) as HTMLElement;
+
+		if (
+			container &&
+			!isFetchingArticles &&
+			articles?.length &&
+			window.innerWidth > 485
+		) {
+			const animation = gsap.fromTo(
+				[title, categoriesArr, ...cards, button],
+				{
+					y: 500
+				},
+				{
+					y: 0,
+					// ease: "none",
+					stagger: 1,
+					// duration: 1.5,
+					scrollTrigger: {
+						trigger: container,
+						start: "top bottom",
+						end: "center center-=200px",
+						scrub: 1.5
+					}
+				}
+			);
+
+			// Clean up the animation when the component unmounts or the effect re-runs
+			return () => {
+				animation.kill();
+				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+			};
+		}
+		if (
+			container &&
+			!isFetchingArticles &&
+			articles?.length &&
+			window.innerWidth < 485
+		) {
+			const animation = gsap.fromTo(
+				[title, categoriesArr, ...cards, button],
+				{
+					y: 500
+				},
+				{
+					y: 0,
+					// ease: "none",
+					stagger: 1,
+					// duration: 1.5,
+					scrollTrigger: {
+						trigger: container,
+						start: "top bottom",
+						end: "bottom center+=300px",
+						scrub: 1.5
+					}
+				}
+			);
+
+			// Clean up the animation when the component unmounts or the effect re-runs
+			return () => {
+				animation.kill();
+				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+			};
+		}
+	}, [isFetchingArticles, articles?.length]);
 	return (
-		<div className={styles.bestWork}>
+		<div className={styles.bestWork} ref={mainRef}>
 			<div className={styles.container}>
 				<Title
 					className={styles.title}

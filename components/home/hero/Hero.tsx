@@ -3,16 +3,31 @@
 import React from "react";
 import styles from "./Hero.module.scss";
 import { Title } from "@/shared";
-import { useGetGeneral } from "@/app/api/hooks/general";
+import { useAppAssets } from "@/hooks/useLoading";
+import { useGlobalContext } from "@/context/AppContext";
 const Hero = () => {
+	const { useGetGeneral } = useAppAssets();
 	const { data: general } = useGetGeneral();
+	const { isPageLoaded } = useGlobalContext();
 	return (
 		<section className={styles.hero}>
 			<div className={styles.container}>
-				<Title className={styles.title} title="We Create Captivating Videos" />
-				<Title className={styles.title} title="That Drives Results" />
-				<div className={styles.video}>
-					<video src={general?.data?.demo || ""} autoPlay muted loop />
+				<div className={styles.block_1} data-is-page-loaded={isPageLoaded}>
+					<Title
+						className={styles.title}
+						title="We Create Captivating Videos"
+					/>
+				</div>
+				<div className={styles.block_2} data-is-page-loaded={isPageLoaded}>
+					<Title className={styles.title} title="That Drives Results" />
+				</div>
+				<div className={styles.video} data-is-page-loaded={isPageLoaded}>
+					<video
+						src={general?.data?.demo || "https://www.youtube.com"}
+						autoPlay
+						muted
+						loop
+					/>
 				</div>
 			</div>
 		</section>

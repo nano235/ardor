@@ -1,13 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./Services.module.scss";
 import { Title, CustomLink, Button } from "@/shared";
 import { media } from "@/mock/media.mock";
 import Image from "next/image";
 import { shortenTitle } from "@/utils/stringShortner copy";
 import { useRouter } from "next/navigation";
-
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 export const cards = [
 	{
 		title: "Promotion Videos",
@@ -41,8 +43,43 @@ export const cards = [
 
 const Services = () => {
 	const router = useRouter();
+	const mainRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const container = mainRef.current;
+		const title = container?.querySelector(`.${styles.title}`) as HTMLElement;
+		const text = container?.querySelector(`.${styles.text}`) as HTMLElement;
+		const cards = container?.querySelectorAll(
+			`.${styles.card_container}`
+		) as NodeListOf<HTMLElement>;
+		if (container) {
+			const animation = gsap.fromTo(
+				[title, text, ...cards],
+				{
+					y: 500
+				},
+				{
+					y: 0,
+					ease: "none",
+					stagger: 1,
+					// duration: 1.5,
+					scrollTrigger: {
+						trigger: container,
+						start: "top bottom",
+						end: "center center-=100px",
+						scrub: 1.5
+					}
+				}
+			);
+			return () => {
+				animation.kill();
+				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+			};
+		}
+	}, []);
+
 	return (
-		<div className={styles.services}>
+		<div className={styles.services} ref={mainRef}>
 			<div className={styles.container}>
 				<div className={styles.row}>
 					<Title

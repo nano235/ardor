@@ -16,13 +16,31 @@
 			margin-bottom: 0;
 		}
 	}
+	.block_1 {
+		display: block;
+		transform: translateY(100vh);
+		&[data-is-page-loaded="true"] {
+			@include fadeIn(0.8s, 1s);
+		}
+	}
+	.block_2 {
+		display: block;
+		transform: translateY(100vh);
+		&[data-is-page-loaded="true"] {
+			@include fadeIn(0.8s, 1.2s);
+		}
+	}
 	.video {
 		width: 100%;
 		height: 79.1rem;
 		margin-top: 5.6rem;
+		transform: translateY(100vh);
 		video {
 			width: 100%;
 			height: 100%;
+		}
+		&[data-is-page-loaded="true"] {
+			@include fadeIn(0.8s, 1.4s);
 		}
 	}
 	@include screenMax("mobile") {

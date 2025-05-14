@@ -4,11 +4,13 @@ import styles from "./General.module.scss";
 import { Formik, Form, Field, FieldProps } from "formik";
 import { Button, InputField } from "@/shared";
 import { PageLoader } from "@/shared/loaders";
-import { useGetGeneral, usePatchGeneral } from "@/app/api/hooks/general";
+import { usePatchGeneral } from "@/app/api/hooks/general";
 import * as Yup from "yup";
 import { IGeneral } from "@/app/api/hooks/general/type";
 import { toast } from "react-hot-toast";
+import { useAppAssets } from "@/hooks/useLoading";
 const General = () => {
+	const { useGetGeneral } = useAppAssets();
 	const { data: generalData, refetch, isFetching } = useGetGeneral();
 	const { mutateAsync: patchGeneral } = usePatchGeneral();
 	const initialValues: IGeneral = {

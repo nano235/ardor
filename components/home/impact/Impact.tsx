@@ -1,8 +1,13 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
 import styles from "./Impact.module.scss";
 import Title from "@/shared/title/Title";
 import CustomLink from "@/shared/customLink/CustomLink";
 import Image from "next/image";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 const impacts = [
 	{
@@ -36,8 +41,88 @@ const impacts = [
 ];
 
 const Impact = () => {
+	const mainRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const container = mainRef.current;
+		const row = container?.children[0].children[0] as HTMLElement;
+		const grid = container?.children[0].children[1] as HTMLElement;
+		const cards = container?.children[0].children[1]
+			.childNodes as NodeListOf<HTMLElement>;
+		const mobLinkContainer = container?.querySelector(
+			`.${styles.mob_link_container}`
+		) as HTMLElement;
+		if (container && window.innerWidth > 485) {
+			const animation = gsap.fromTo(
+				[row],
+				{
+					y: 200
+				},
+				{
+					y: 0,
+					ease: "none",
+					stagger: 0.2,
+					// duration: 1.5,
+					scrollTrigger: {
+						trigger: container,
+						start: "top center-=200px",
+						end: "center center-=300px",
+						scrub: 1.5
+					}
+				}
+			);
+			const animation2 = gsap.fromTo(
+				[grid],
+				{
+					x: 500
+				},
+				{
+					x: 0,
+					ease: "none",
+					stagger: 0.2,
+					delay: 1,
+					// duration: 1.5,
+					scrollTrigger: {
+						trigger: container,
+						start: "center center",
+						end: "bottom center-=500px",
+						scrub: 1.5
+					}
+				}
+			);
+			return () => {
+				animation.kill();
+				animation2.kill();
+				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+			};
+		}
+		if (container && window.innerWidth < 485) {
+			const animation = gsap.fromTo(
+				[row, ...cards, mobLinkContainer],
+				{
+					y: 500
+				},
+				{
+					y: 0,
+					ease: "none",
+					stagger: 0.2,
+					// duration: 1.5,
+					scrollTrigger: {
+						trigger: container,
+						start: "top bottom-=1900px",
+						end: "bottom top-=700px",
+						scrub: 1.5
+					}
+				}
+			);
+			return () => {
+				animation.kill();
+				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+			};
+		}
+	}, []);
 	return (
-		<div className={styles.impact}>
+		<div className={styles.impact} ref={mainRef}>
 			<div className={styles.container}>
 				<div className={styles.row}>
 					<Title

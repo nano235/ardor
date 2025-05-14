@@ -4,41 +4,19 @@ import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { Logo, Button } from "@/shared";
 import styles from "./Header.module.scss";
-// import { scrollTo } from "@/utils";
 import { NavLink } from "@/interfaces";
 import { usePathname } from "next/navigation";
-
+import { useGlobalContext } from "@/context/AppContext";
 interface HeaderProps {
 	navLinks: NavLink[];
 }
 
 const Header = ({ navLinks }: HeaderProps) => {
-	// const router = useRouter();
 	const pathname = usePathname();
 	const [scroll, setScroll] = useState<boolean>(false);
 	const [collapsed, setCollapsed] = useState<boolean>(true);
-	// const [dropDown, setDropDown] = useState<boolean>(false);
+	const { isPageLoaded } = useGlobalContext();
 	const ref = useRef<HTMLElement>(null);
-	// const handleNavClick = (id: string) => {
-	// 	scrollTo({ id });
-	// 	setCollapsed(true);
-	// };
-
-	// const toggling = (event: React.MouseEvent) => {
-	//   setDropDown(!dropDown)
-	//   event.stopPropagation()
-	// }
-
-	// useEffect(() => {
-	// 	const handleClickOutside = () => {
-	// 		setDropDown(false);
-	// 	};
-
-	// 	document.addEventListener("click", handleClickOutside);
-	// 	return () => {
-	// 		document.removeEventListener("click", handleClickOutside);
-	// 	};
-	// }, []);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -67,6 +45,7 @@ const Header = ({ navLinks }: HeaderProps) => {
 		<header
 			className={`${styles.header} ${scroll ? styles.header_scrolled : ""}`}
 			ref={ref}
+			data-is-page-loaded={isPageLoaded}
 		>
 			<div className={styles.container}>
 				<Link href="/">

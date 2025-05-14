@@ -8,6 +8,8 @@
 	background-color: $col-primary;
 	transition: $all-transition;
 	z-index: 3;
+	transform: translateY(100vh);
+	overflow-x: hidden;
 	.container {
 		max-width: $max-width;
 		margin-inline: auto;
@@ -99,6 +101,9 @@
 				}
 			}
 		}
+	}
+	&[data-is-page-loaded="true"] {
+		@include fadeIn(0.8s, 0.7s);
 	}
 }
 .header_wrapper,

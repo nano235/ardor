@@ -6,6 +6,13 @@ export interface NavLinkMenu {
 	icon?: string;
 }
 
+export interface GlobalContext {
+	progress: number;
+	setProgress: React.Dispatch<React.SetStateAction<number>>;
+	isPageLoaded: boolean;
+	setIsPageLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export interface NavLinkSub {
 	label: string;
 	icon: string;

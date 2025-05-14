@@ -47,6 +47,18 @@
 	box-shadow: $x + rem $y + rem $color;
 }
 
+@mixin fadeOut($time: 0.7s, $delay: 0.7s) {
+	animation: fadeOut $time ease-in-out;
+	animation-delay: $delay;
+	animation-fill-mode: forwards;
+}
+
+@mixin fadeIn($time: 0.7s, $delay: 0.7s) {
+	animation: fadeIn $time ease-out;
+	animation-delay: $delay;
+	animation-fill-mode: forwards;
+}
+
 @mixin screenMin($breakpoint) {
 	// If the key exists in the map
 	@if map-has-key($breakpoints, $breakpoint) {
@@ -76,5 +88,23 @@
 	@else {
 		@warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
       + "Available breakpoints are: #{map-keys($breakpoints)}.";
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(-100%);
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(100vh);
+	}
+	to {
+		transform: translateY(0);
 	}
 }

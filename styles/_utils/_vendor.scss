@@ -13,6 +13,12 @@
 	position: static !important;
 }
 
+.swiper-wrapper {
+	.swiper-slide {
+		height: 100% !important;
+	}
+}
+
 .swiper-button-next,
 .swiper-button-prev {
 	top: 9rem !important;
