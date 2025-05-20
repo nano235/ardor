@@ -66,11 +66,17 @@ const ProjectView = () => {
 				</div>
 				<Title title={article?.title} />
 				<div className={styles.video}>
-					<video
+					{/* <video
 						src={article?.videos?.[0]?.url}
 						controls
 						poster={article?.videos?.[0]?.thumbnail}
 						style={{ width: "100%", height: "100%" }}
+					/> */}
+					<iframe
+						src={article?.videos?.[0]?.url}
+						style={{ width: "100%", height: "100%" }}
+						allow="autoplay; fullscreen"
+						allowFullScreen
 					/>
 				</div>
 				<div className={styles.block}>
