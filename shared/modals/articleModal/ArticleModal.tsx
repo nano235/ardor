@@ -330,7 +330,13 @@ const ArticleModal = ({
 								validationSchema={categoriesSchema}
 								onSubmit={handleSubmit}
 							>
-								{({ errors, touched, isSubmitting, setFieldValue }) => {
+								{({
+									errors,
+									touched,
+									isSubmitting,
+									setFieldValue,
+									values
+								}) => {
 									return (
 										<Form>
 											<Field name="title">
@@ -348,6 +354,7 @@ const ArticleModal = ({
 																errors.title) ||
 															""
 														}
+														value={values.title}
 														type="text"
 													/>
 												)}
@@ -367,6 +374,7 @@ const ArticleModal = ({
 																errors.description) ||
 															""
 														}
+														value={values.description}
 													/>
 												)}
 											</Field>
@@ -400,7 +408,7 @@ const ArticleModal = ({
 													/>
 												)}
 											</Field>
-											<Field name="featured">
+											{/* <Field name="featured">
 												{({ field }: FieldProps) => (
 													<InputField
 														{...field}
@@ -412,7 +420,7 @@ const ArticleModal = ({
 														}
 													/>
 												)}
-											</Field>
+											</Field> */}
 											<Field name="client">
 												{({ field }: FieldProps) => (
 													<InputField
@@ -428,6 +436,7 @@ const ArticleModal = ({
 																errors.client) ||
 															""
 														}
+														value={values.client}
 														type="text"
 													/>
 												)}
@@ -447,6 +456,7 @@ const ArticleModal = ({
 																errors.credit) ||
 															""
 														}
+														value={values.credit}
 													/>
 												)}
 											</Field>
@@ -465,6 +475,7 @@ const ArticleModal = ({
 																errors.website) ||
 															""
 														}
+														value={values.website}
 													/>
 												)}
 											</Field>
@@ -483,6 +494,7 @@ const ArticleModal = ({
 																errors.attendance) ||
 															""
 														}
+														value={values.attendance}
 													/>
 												)}
 											</Field>
@@ -501,6 +513,7 @@ const ArticleModal = ({
 																errors.projectType) ||
 															""
 														}
+														value={values.projectType}
 													/>
 												)}
 											</Field>
@@ -519,6 +532,7 @@ const ArticleModal = ({
 																errors.metrics) ||
 															""
 														}
+														value={values.metrics}
 													/>
 												)}
 											</Field>
@@ -537,6 +551,7 @@ const ArticleModal = ({
 																errors.agency) ||
 															""
 														}
+														value={values.agency}
 													/>
 												)}
 											</Field>
@@ -555,6 +570,7 @@ const ArticleModal = ({
 																errors.productionTime) ||
 															""
 														}
+														value={values.productionTime}
 													/>
 												)}
 											</Field>
@@ -573,6 +589,7 @@ const ArticleModal = ({
 																errors.videoType) ||
 															""
 														}
+														value={values.videoType}
 													/>
 												)}
 											</Field>
@@ -717,6 +734,7 @@ const ArticleModal = ({
 																errors.videos) ||
 															""
 														}
+														value={article?.videos?.[0]?.url}
 													/>
 												)}
 											</Field>
@@ -759,9 +777,15 @@ const ArticleModal = ({
 																className={styles.image}
 															>
 																<CustomImage
-																	src={URL.createObjectURL(
-																		displayedImage
-																	)}
+																	src={
+																		displayedImage.name.includes(
+																			"cloudinary"
+																		)
+																			? displayedImage.name
+																			: URL.createObjectURL(
+																					displayedImage
+																			  )
+																	}
 																	alt=""
 																	fill
 																	sizes="100vw"
@@ -790,68 +814,6 @@ const ArticleModal = ({
 													)}
 												</div>
 											</div>
-											{/* <div className={styles.image_container}>
-												<div
-													className={styles.addimage_container}
-												>
-													<input
-														type="file"
-														className={styles.file_input}
-														onChange={handleVideoChange}
-														accept=".mp4, .mov, .avi, .webm"
-														multiple
-														// required
-													/>
-													<div className={styles.add_image}>
-														<Image
-															src="/svgs/icon-add-image.svg"
-															alt=""
-															fill
-															sizes="100vw"
-														/>
-													</div>
-													<div className={styles.text}>
-														<p>
-															Drop your videos here, or{" "}
-															<span>click to upload</span>
-														</p>
-														<h5>
-															mp4, mov, avi, webm
-															recommended, up to 10mb each
-														</h5>
-													</div>
-												</div>
-												<div className={styles.image_row}>
-													{displayedVideos && (
-														<div key={displayedVideos.name}>
-															<video
-																src={URL.createObjectURL(
-																	displayedVideos
-																)}
-																controls
-																className={styles.video}
-															/>
-															<div
-																className={
-																	styles.closeModal_container
-																}
-																// onClick={() =>
-																// 	deleteVideo(displayedVideo)
-																// }
-															>
-																<div
-																	className={
-																		styles.closeModal
-																	}
-																>
-																	<span></span>
-																	<span></span>
-																</div>
-															</div>
-														</div>
-													)}
-												</div>
-											</div> */}
 											<div className={styles.image_container}>
 												<div
 													className={styles.addimage_container}
@@ -894,9 +856,15 @@ const ArticleModal = ({
 															className={styles.image}
 														>
 															<CustomImage
-																src={URL.createObjectURL(
-																	displayedVideoThumbnail
-																)}
+																src={
+																	displayedVideoThumbnail.name.includes(
+																		"cloudinary"
+																	)
+																		? displayedVideoThumbnail.name
+																		: URL.createObjectURL(
+																				displayedVideoThumbnail
+																		  )
+																}
 																alt=""
 																fill
 																sizes="100vw"

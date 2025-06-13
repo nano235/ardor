@@ -39,10 +39,14 @@ const ProjectsView = () => {
 						</h6>
 					</div>
 				</div>
-				<div className={styles.main}>
-					<Image src="/images/demo.png" alt="projects" fill />
-				</div>
 				<div className={styles.categories}>
+					<div
+						className={styles.category}
+						data-active={activeCategory === "all"}
+						onClick={() => setActiveCategory("all")}
+					>
+						All Projects
+					</div>
 					{categories.map(category => (
 						<div
 							key={category._id}

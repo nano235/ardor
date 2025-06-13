@@ -29,7 +29,7 @@ const CategoriesView = () => {
 
 	const articles = articleData?.data as IArticle[];
 
-	const tableData: any = articles?.map((article: IArticle) => {
+	const tableData: IArticle[] = articles?.map((article: IArticle) => {
 		return {
 			id: article._id,
 			Slug: article.slug,

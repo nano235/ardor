@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import styles from "./Footer.module.scss";
 import Logo from "../logo/Logo";
@@ -5,12 +7,44 @@ import Title from "../title/Title";
 import WaitListInput from "../waitListInput/WaitListInput";
 import Image from "next/image";
 import Link from "next/link";
-import { socialMediaLinks } from "@/mock";
+import { useAppAssets } from "@/hooks/useLoading";
 
 const date = new Date();
 const year = date.getFullYear();
 
 const Footer = () => {
+	const { useGetGeneral } = useAppAssets();
+	const { data: general } = useGetGeneral();
+
+	const socialMediaLinks = [
+		general?.data.twitter && {
+			label: "x",
+			href: general?.data.twitter,
+			icon: "/svgs/icon-x.svg"
+		},
+		general?.data.linkedin && {
+			label: "linkedIn",
+			href: general?.data.linkedin,
+			icon: "/svgs/icon-linkedin.svg"
+		},
+		general?.data.facebook && {
+			label: "facebook",
+			href: general?.data.facebook,
+			icon: "/svgs/icon-facebook.svg"
+		},
+		general?.data.instagram && {
+			label: "instagram",
+			href: general?.data.instagram,
+			icon: "/svgs/icon-instagram.svg"
+		},
+		general?.data.tikTok && {
+			label: "tiktok",
+			href: general?.data.tikTok,
+			icon: "/svgs/icon-tiktok.svg"
+		}
+	].filter(Boolean);
+
+	console.log(socialMediaLinks);
 	return (
 		<footer className={styles.footer}>
 			<div className={styles.container}>
@@ -29,20 +63,23 @@ const Footer = () => {
 							<div className={styles.title}>
 								<h3>CONTACT US</h3>
 							</div>
-							<Link href="tel:+1234567890" className={styles.small_row}>
+							<Link
+								href={`tel:${general?.data.phoneNumber}`}
+								className={styles.small_row}
+							>
 								<div className={styles.icon}>
 									<Image fill alt="" src="/images/icon-call.png" />
 								</div>
-								<p>+123 456 7890</p>
+								<p>{general?.data.phoneNumber}</p>
 							</Link>
 							<Link
-								href="mailto:info@ardors.co"
+								href={`mailto:${general?.data.email}`}
 								className={styles.small_row}
 							>
 								<div className={styles.icon}>
 									<Image fill alt="" src="/images/icon-mail.png" />
 								</div>
-								<p>info@ardors.co</p>
+								<p>{general?.data.email}</p>
 							</Link>
 						</div>
 						<div className={styles.block}>
@@ -59,16 +96,21 @@ const Footer = () => {
 							<h3>FOLLOW ON SOCIAL MEDIA</h3>
 						</div>
 
-						<div className={styles.grid}>
+						<div
+							className={styles.grid}
+							style={{
+								gridTemplateColumns: `repeat(${socialMediaLinks.length}, 2.4rem)`
+							}}
+						>
 							{socialMediaLinks.map(item => (
 								<Link
-									href={item.href}
-									key={item.label}
+									href={item ? item?.href : ""}
+									key={item ? item.label : ""}
 									className={styles.icon}
 									target="_blank"
 									rel="noopener noreferrer"
 								>
-									<Image fill alt="" src={item.icon} />
+									<Image fill alt="" src={item ? item.icon : ""} />
 								</Link>
 							))}
 						</div>

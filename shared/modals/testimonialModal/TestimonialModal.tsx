@@ -198,7 +198,6 @@ const TestimonialModal = ({
 								onSubmit={handleSubmit}
 							>
 								{({ errors, touched, isSubmitting }) => {
-									console.log(errors);
 									return (
 										<Form>
 											<Field name="name">

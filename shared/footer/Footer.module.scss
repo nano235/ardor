@@ -71,6 +71,7 @@
 			}
 			.grid {
 				@include grid(repeat(5, 2.4rem), 2.4rem);
+				place-content: center;
 				.icon {
 					position: relative;
 					width: 100%;

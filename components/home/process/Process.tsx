@@ -120,7 +120,7 @@ const Process = () => {
 			<div className={styles.container}>
 				<div className={styles.block}>
 					<Title
-						subTitle="Our Processes"
+						subTitle="Our Process"
 						title="Our Creative Process – Tailored for Your Video Needs"
 					/>
 					{processes.map(process => (
