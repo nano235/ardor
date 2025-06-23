@@ -83,7 +83,10 @@ const ProjectView = () => {
 					<div className={styles.text}>
 						<p>{article?.description}</p>
 					</div>
-					<div className={styles.grid}>
+					<div
+						className={styles.grid}
+						style={{ gridTemplateColumns: `repeat(${details.length}, 1fr)` }}
+					>
 						{details.map(detail =>
 							typeof detail === "object" && detail.title ? (
 								<div className={styles.text} key={detail.title}>
@@ -94,7 +97,7 @@ const ProjectView = () => {
 						)}
 					</div>
 				</div>
-				<div className={styles.row}>
+				{/* <div className={styles.row}>
 					<div className={styles.title}>
 						<h1>Challenges</h1>
 					</div>
@@ -109,7 +112,7 @@ const ProjectView = () => {
 					<div className={styles.text}>
 						<p>{article?.solutions?.map(solution => solution)}</p>
 					</div>
-				</div>
+				</div> */}
 				<div className={styles.photo_grid}>
 					{article?.images?.map(image => (
 						<div className={styles.photo} key={image}>

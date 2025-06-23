@@ -109,7 +109,7 @@ const BestWork = () => {
 				<Title
 					className={styles.title}
 					title="Explore Some Of Our Best Work"
-					subTitle="Projects"
+					subTitle="PROJECTS"
 					description="From concept to motion, we turn ideas into visually stunning videos that leave an impact."
 				/>
 				<div className={styles.categories}>

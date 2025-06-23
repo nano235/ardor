@@ -51,8 +51,8 @@ const categoriesSchema = Yup.object().shape({
 	agency: Yup.string(),
 	productionTime: Yup.string(),
 	videoType: Yup.string(),
-	challenges: Yup.array().of(Yup.string()).required("Challenges are required"),
-	solutions: Yup.array().of(Yup.string()).required("Solutions are required"),
+	challenges: Yup.array().of(Yup.string()),
+	solutions: Yup.array().of(Yup.string()),
 	credit: Yup.string(),
 	website: Yup.string(),
 	attendance: Yup.string(),
@@ -593,7 +593,7 @@ const ArticleModal = ({
 													/>
 												)}
 											</Field>
-											<Field name="challenges">
+											{/* <Field name="challenges">
 												{({ field }: FieldProps) => (
 													<TextArea
 														{...field}
@@ -709,7 +709,7 @@ const ArticleModal = ({
 														}}
 													/>
 												)}
-											</Field>
+											</Field> */}
 											<Field name="videoUrl">
 												{({ field }: FieldProps) => (
 													<InputField
