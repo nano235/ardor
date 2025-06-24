@@ -55,6 +55,9 @@ const ProjectView = () => {
 			value: article?.credit
 		}
 	].filter(Boolean);
+
+	const embedUrl = getYoutubeEmbedUrl(article?.videos?.[0]?.url || "");
+
 	return (
 		<div className={styles.project}>
 			<div className={styles.container}>
@@ -73,7 +76,7 @@ const ProjectView = () => {
 						style={{ width: "100%", height: "100%" }}
 					/> */}
 					<iframe
-						src={article?.videos?.[0]?.url}
+						src={embedUrl}
 						style={{ width: "100%", height: "100%" }}
 						allow="autoplay; fullscreen"
 						allowFullScreen
@@ -126,3 +129,8 @@ const ProjectView = () => {
 };
 
 export default ProjectView;
+
+function getYoutubeEmbedUrl(url: string): string {
+	const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+	return match ? `https://www.youtube.com/embed/${match[1]}?rel=0` : url;
+}

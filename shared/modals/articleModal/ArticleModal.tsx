@@ -329,6 +329,7 @@ const ArticleModal = ({
 								initialValues={initialValues}
 								validationSchema={categoriesSchema}
 								onSubmit={handleSubmit}
+								enableReinitialize
 							>
 								{({
 									errors,
@@ -721,10 +722,9 @@ const ArticleModal = ({
 														}
 														className={styles.input}
 														onChange={e => {
-															// setFieldValue(
-															// 	"videoUrl",
-															// 	e.target.value
-															// );
+															setFieldValue("videos", [
+																{ url: e.target.value }
+															]);
 															setDisplayedVideos(
 																e.target.value
 															);
@@ -734,7 +734,7 @@ const ArticleModal = ({
 																errors.videos) ||
 															""
 														}
-														value={article?.videos?.[0]?.url}
+														value={values?.videos?.[0]?.url}
 													/>
 												)}
 											</Field>
