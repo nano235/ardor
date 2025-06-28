@@ -141,10 +141,10 @@ const BestWork = () => {
 								className={styles.card}
 								key={index}
 							>
-								{article.images && (
+								{article.videos && (
 									<div className={styles.image}>
 										<Image
-											src={article.images[0]}
+											src={article.videos[0].thumbnail}
 											alt={article.title as string}
 											fill
 										/>
