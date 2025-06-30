@@ -120,7 +120,7 @@ const BestWork = () => {
 					>
 						All Projects
 					</div>
-					{categories.slice(0, 6).map(category => (
+					{categories.map(category => (
 						<div
 							key={category._id}
 							className={styles.category}
