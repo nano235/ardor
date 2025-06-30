@@ -119,6 +119,11 @@
 				}
 			}
 		}
+		.video {
+			position: relative;
+			width: 100%;
+			height: 62.5rem;
+		}
 	}
 	@include screenMax("mobile") {
 		padding: 4rem 1.6rem;
@@ -157,6 +162,9 @@
 					}
 				}
 			}
+		}
+		.video {
+			height: 20rem !important;
 		}
 	}
 }

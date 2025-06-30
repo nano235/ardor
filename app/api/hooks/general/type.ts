@@ -10,6 +10,10 @@ export interface IGeneral {
 	twitter?: string;
 	linkedin?: string;
 	tikTok?: string;
+	promotionVideo?: string;
+	socialMedia?: string;
+	productDemo?: string;
+	brandAnimation?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
 	_id?: string;

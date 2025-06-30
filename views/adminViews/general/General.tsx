@@ -24,7 +24,11 @@ const General = () => {
 		instagram: generalData?.data?.instagram || "",
 		twitter: generalData?.data?.twitter || "",
 		linkedin: generalData?.data?.linkedin || "",
-		tikTok: generalData?.data?.tikTok || ""
+		tikTok: generalData?.data?.tikTok || "",
+		promotionVideo: generalData?.data?.promotionVideo || "",
+		productDemo: generalData?.data?.productDemo || "",
+		socialMedia: generalData?.data?.socialMedia || "",
+		brandAnimation: generalData?.data?.brandAnimation || ""
 	};
 
 	const generalSchema = Yup.object().shape({
@@ -38,7 +42,11 @@ const General = () => {
 		instagram: Yup.string(),
 		twitter: Yup.string(),
 		linkedin: Yup.string(),
-		tikTok: Yup.string()
+		tikTok: Yup.string(),
+		productDemo: Yup.string(),
+		promotionVideo: Yup.string(),
+		socialMedia: Yup.string(),
+		brandAnimation: Yup.string()
 	});
 
 	const handleSubmit = async (values: IGeneral) => {
@@ -122,6 +130,84 @@ const General = () => {
 													error={
 														(touched.process &&
 															errors.process) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="promotionVideo">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Promotion Video video link"
+													placeholder={
+														generalData?.data
+															.promotionVideo ||
+														"Enter Promotion Video"
+													}
+													className={styles.input}
+													error={
+														(touched.promotionVideo &&
+															errors.promotionVideo) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="productDemo">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Product Demo video link"
+													placeholder={
+														generalData?.data.productDemo ||
+														"Enter Product Demo"
+													}
+													className={styles.input}
+													error={
+														(touched.productDemo &&
+															errors.productDemo) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="socialMedia">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Social Media video link"
+													placeholder={
+														generalData?.data.socialMedia ||
+														"Enter Social Media"
+													}
+													className={styles.input}
+													error={
+														(touched.socialMedia &&
+															errors.socialMedia) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="brandAnimation">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Brand Animation video link"
+													placeholder={
+														generalData?.data
+															.brandAnimation ||
+														"Enter Brand Animation"
+													}
+													className={styles.input}
+													error={
+														(touched.brandAnimation &&
+															errors.brandAnimation) ||
 														""
 													}
 													type="text"
