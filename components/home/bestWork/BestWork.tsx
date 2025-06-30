@@ -135,7 +135,7 @@ const BestWork = () => {
 					<PageLoader />
 				) : (
 					<div className={styles.grid}>
-						{articles?.map((article, index) => (
+						{articles?.slice(0, 6).map((article, index) => (
 							<Link
 								href={`/projects/${article.slug}`}
 								className={styles.card}
