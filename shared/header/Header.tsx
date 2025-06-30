@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Logo, Button } from "@/shared";
 import styles from "./Header.module.scss";
 import { NavLink } from "@/interfaces";
@@ -13,29 +13,29 @@ interface HeaderProps {
 
 const Header = ({ navLinks }: HeaderProps) => {
 	const pathname = usePathname();
-	const [scroll, setScroll] = useState<boolean>(false);
+	// const [scroll, setScroll] = useState<boolean>(false);
 	const [collapsed, setCollapsed] = useState<boolean>(true);
 	const { isPageLoaded } = useGlobalContext();
 	const ref = useRef<HTMLElement>(null);
 
-	useEffect(() => {
-		const handleScroll = () => {
-			if (window.scrollY > 50) {
-				setScroll(true);
-			} else {
-				setScroll(false);
-			}
-		};
+	// useEffect(() => {
+	// 	const handleScroll = () => {
+	// 		if (window.scrollY > 50) {
+	// 			setScroll(true);
+	// 		} else {
+	// 			setScroll(false);
+	// 		}
+	// 	};
 
-		window.addEventListener("scroll", handleScroll);
+	// 	window.addEventListener("scroll", handleScroll);
 
-		// Check initial scroll position
-		handleScroll();
+	// 	// Check initial scroll position
+	// 	handleScroll();
 
-		return () => {
-			window.removeEventListener("scroll", handleScroll);
-		};
-	}, []);
+	// 	return () => {
+	// 		window.removeEventListener("scroll", handleScroll);
+	// 	};
+	// }, []);
 
 	const checkActive = (href: string) => {
 		const isActive = href === pathname;
@@ -43,7 +43,7 @@ const Header = ({ navLinks }: HeaderProps) => {
 	};
 	return (
 		<header
-			className={`${styles.header} ${scroll ? styles.header_scrolled : ""}`}
+			className={`${styles.header} ${styles.header_scrolled}`}
 			ref={ref}
 			data-is-page-loaded={isPageLoaded}
 		>

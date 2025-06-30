@@ -11,7 +11,8 @@
 			gap: 2.4rem;
 			margin-bottom: 8.2rem;
 		}
-		.grid {
+		.grid,
+		.grid_mob {
 			@include grid(repeat(4, 1fr), 2.4rem, 2.4rem);
 			.card {
 				background-color: #232323;
@@ -37,6 +38,9 @@
 				}
 			}
 		}
+		.grid_mob {
+			display: none;
+		}
 		.link_container,
 		.mob_link_container {
 			padding: 1.6rem 2.4rem;
@@ -58,6 +62,10 @@
 				margin-bottom: 3.2rem;
 			}
 			.grid {
+				display: none;
+			}
+			.grid_mob {
+				display: grid;
 				grid-template-columns: 100%;
 			}
 			.link_container {

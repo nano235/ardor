@@ -1,15 +1,23 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "./Impact.module.scss";
 import Title from "@/shared/title/Title";
 import CustomLink from "@/shared/customLink/CustomLink";
 import Image from "next/image";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { useScroll, useSpring, useTransform, motion, MotionValue } from "framer-motion";
 gsap.registerPlugin(ScrollTrigger);
 
-const impacts = [
+interface Card {
+	id: number;
+	title: string;
+	description: string;
+	icon: string;
+}
+
+const impacts: Card[] = [
 	{
 		id: 1,
 		title: "High-Quality, Engaging Content ",
@@ -42,89 +50,53 @@ const impacts = [
 
 const Impact = () => {
 	const mainRef = useRef<HTMLDivElement>(null);
+	const { scrollYProgress } = useScroll({
+		target: mainRef,
+		offset: ["start end", "end center"]
+	});
 
-	useEffect(() => {
-		const container = mainRef.current;
-		const row = container?.children[0].children[0] as HTMLElement;
-		const grid = container?.children[0].children[1] as HTMLElement;
-		const cards = container?.children[0].children[1]
-			.childNodes as NodeListOf<HTMLElement>;
-		const mobLinkContainer = container?.querySelector(
-			`.${styles.mob_link_container}`
-		) as HTMLElement;
-		if (container && window.innerWidth > 485) {
-			const animation = gsap.fromTo(
-				[row],
-				{
-					y: 200
-				},
-				{
-					y: 0,
-					ease: "none",
-					stagger: 0.2,
-					// duration: 1.5,
-					scrollTrigger: {
-						trigger: container,
-						start: "top center-=200px",
-						end: "center center-=300px",
-						scrub: 1.5
-					}
-				}
-			);
-			const animation2 = gsap.fromTo(
-				[grid],
-				{
-					x: 500
-				},
-				{
-					x: 0,
-					ease: "none",
-					stagger: 0.2,
-					delay: 1,
-					// duration: 1.5,
-					scrollTrigger: {
-						trigger: container,
-						start: "center center",
-						end: "bottom center-=500px",
-						scrub: 1.5
-					}
-				}
-			);
-			return () => {
-				animation.kill();
-				animation2.kill();
-				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-			};
-		}
-		if (container && window.innerWidth < 485) {
-			const animation = gsap.fromTo(
-				[row, ...cards, mobLinkContainer],
-				{
-					y: 500
-				},
-				{
-					y: 0,
-					ease: "none",
-					stagger: 0.2,
-					// duration: 1.5,
-					scrollTrigger: {
-						trigger: container,
-						start: "top bottom-=1900px",
-						end: "bottom top-=700px",
-						scrub: 1.5
-					}
-				}
-			);
-			return () => {
-				animation.kill();
-				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-			};
-		}
-	}, []);
+	const rawY = useTransform(scrollYProgress, [0, 0.3], [300, 0]);
+	const y = useSpring(rawY, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
+	const rawOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
+	const opacity = useSpring(rawOpacity, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
+
+	const rawX = useTransform(scrollYProgress, [0.2, 0.7], [700, 0]);
+	const x = useSpring(rawX, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
+	const rawOpacityX = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+	const opacityX = useSpring(rawOpacityX, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
+
+	const rawYButton = useTransform(scrollYProgress, [0.7, 0.9], [200, 0]);
+	const yButton = useSpring(rawYButton, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
+	const rawOpacityButton = useTransform(scrollYProgress, [0.7, 0.8], [0, 1]);
+	const opacityButton = useSpring(rawOpacityButton, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
 	return (
 		<div className={styles.impact} ref={mainRef}>
 			<div className={styles.container}>
-				<div className={styles.row}>
+				<motion.div className={styles.row} style={{ y, opacity }}>
 					<Title
 						title="Creating Impact, Not Just Videos"
 						description="Our videos do more than look great—they engage, inspire, and deliver results."
@@ -132,9 +104,9 @@ const Impact = () => {
 					<div className={styles.link_container}>
 						<CustomLink href="/projects" label="Let's work together" />
 					</div>
-				</div>
-				<div className={styles.grid}>
-					{impacts.map(impact => (
+				</motion.div>
+				<motion.div className={styles.grid} style={{ x, opacity: opacityX }}>
+					{impacts.map((impact: Card) => (
 						<div className={styles.card} key={impact.id}>
 							<div className={styles.icon}>
 								<Image src={impact.icon} alt={impact.title} fill />
@@ -145,13 +117,56 @@ const Impact = () => {
 							</div>
 						</div>
 					))}
+				</motion.div>
+				<div className={styles.grid_mob}>
+					{impacts.map((impact: Card, index: number) => (
+						<Card
+							impact={impact}
+							index={index}
+							key={index}
+							scrollYProgress={scrollYProgress}
+						/>
+					))}
 				</div>
-				<div className={styles.mob_link_container}>
+				<motion.div
+					className={styles.mob_link_container}
+					style={{ y: yButton, opacity: opacityButton }}
+				>
 					<CustomLink href="/projects" label="Let's work together" />
-				</div>
+				</motion.div>
 			</div>
 		</div>
 	);
 };
 
 export default Impact;
+
+interface CardProps {
+	impact: Card;
+	index: number;
+	scrollYProgress: MotionValue<number>;
+}
+
+const Card = ({ impact, index, scrollYProgress }: CardProps) => {
+	const start = 0 + index * 0.1;
+	const end = start + 0.3;
+	const rawY = useTransform(scrollYProgress, [start, end], [300, 0]);
+	const y = useSpring(rawY, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
+
+	const opacity = useTransform(scrollYProgress, [start, end], [0.3, 1]);
+	return (
+		<motion.div className={styles.card} key={index} style={{ y, opacity }}>
+			<div className={styles.icon}>
+				<Image src={impact.icon} alt={impact.title} fill />
+			</div>
+			<div className={styles.details}>
+				<h3>{impact.title}</h3>
+				<p>{impact.description}</p>
+			</div>
+		</motion.div>
+	);
+};

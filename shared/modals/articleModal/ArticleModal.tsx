@@ -8,7 +8,7 @@ import {
 	Modal,
 	TextArea
 } from "@/shared";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "./ArticleModal.module.scss";
 import { PageLoader } from "@/shared/loaders";
 import { SettingsOperationType } from "@/interfaces";
@@ -78,15 +78,17 @@ const ArticleModal = ({
 
 	const article = articleData?.data as IArticle;
 
-	const [displayedImages, setDisplayedImages] = useState<File[]>(
-		article?.images?.map(image => new File([], image)) || []
+	const [displayedImages, setDisplayedImages] = useState<(File | string)[]>(
+		article?.images || []
 	);
 	const [displayedVideos, setDisplayedVideos] = useState<string>(
 		article?.videos?.length ? article?.videos[0].url : ""
 	);
-	const [displayedVideoThumbnail, setDisplayedVideoThumbnail] = useState<File | null>(
-		article?.videos?.length ? new File([], article?.videos[0]?.thumbnail) : null
+
+	const [displayedVideoThumbnail, setDisplayedVideoThumbnail] = useState<File | string>(
+		article?.videos![0].thumbnail || ""
 	);
+
 	const initialValues: IArticle = {
 		title: article?.title,
 		description: article?.description,
@@ -107,6 +109,13 @@ const ArticleModal = ({
 		projectType: article?.projectType,
 		metrics: article?.metrics
 	};
+
+	useEffect(() => {
+		if (articleData) {
+			setDisplayedImages(article?.images as string[]);
+			setDisplayedVideoThumbnail(article?.videos![0].thumbnail);
+		}
+	}, [article, articleData]);
 
 	const handleDelete = async () => {
 		try {
@@ -140,7 +149,10 @@ const ArticleModal = ({
 			};
 			if (displayedImages && displayedImages.length > 0) {
 				try {
-					const imgUploadRes = await postUploadFile(displayedImages!);
+					const filesToUpload = displayedImages.filter(
+						img => img instanceof File
+					) as File[];
+					const imgUploadRes = await postUploadFile(filesToUpload);
 					if (!imgUploadRes || !imgUploadRes.length) {
 						throw new Error("Failed to upload images");
 					}
@@ -156,6 +168,7 @@ const ArticleModal = ({
 			}
 			if (displayedVideoThumbnail) {
 				try {
+					if (typeof displayedVideoThumbnail === "string") return;
 					const videoThumbnailUploadRes = await postUploadFile([
 						displayedVideoThumbnail
 					]);
@@ -223,26 +236,24 @@ const ArticleModal = ({
 		}
 	};
 
-	const deleteImage = (image: File) => {
-		const localArr = displayedImages;
-		const filteredImages = localArr.filter(item => item.name !== image.name);
-		setDisplayedImages(filteredImages);
+	const deleteImage = (image: File | string) => {
+		setDisplayedImages(prev =>
+			prev.filter(item =>
+				typeof item === "string" && typeof image === "string"
+					? item !== image
+					: typeof item !== "string" && typeof image !== "string"
+					? item.name !== image.name
+					: true
+			)
+		);
 	};
 
 	const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const files = e.target.files;
 		if (files && files.length > 0) {
 			const validFiles = Array.from(files).filter(file => file instanceof File);
-			// if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
-			// 	return toast.error(
-			// 		`${validFiles[0].name} exceeds max size of ${
-			// 			MAX_FILE_SIZE / 1048576
-			// 		}mb`
-			// 	);
-			// }
 			if (validFiles.length > 0) {
-				const localArr = [...displayedImages, ...validFiles];
-				setDisplayedImages(localArr);
+				setDisplayedImages(prev => [...prev, ...validFiles]);
 			} else {
 				toast.error("No valid File objects were selected");
 			}
@@ -251,38 +262,10 @@ const ArticleModal = ({
 		}
 	};
 
-	// const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-	// 	const files = e.target.files;
-	// 	if (files && files.length > 0) {
-	// 		const validFiles = Array.from(files).filter(file => file instanceof File);
-	// 		// if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
-	// 		// 	return toast.error(
-	// 		// 		`${validFiles[0].name} exceeds max size of ${
-	// 		// 			MAX_FILE_SIZE / 1048576
-	// 		// 		}mb`
-	// 		// 	);
-	// 		// }
-	// 		if (validFiles.length > 0) {
-	// 			setDisplayedVideos(validFiles[0]);
-	// 		} else {
-	// 			toast.error("No valid File objects were selected");
-	// 		}
-	// 	} else {
-	// 		toast.error("No files selected");
-	// 	}
-	// };
-
 	const handleVideoThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const files = e.target.files;
 		if (files && files.length > 0) {
 			const validFiles = Array.from(files).filter(file => file instanceof File);
-			// if (validFiles[0] && validFiles[0].size > MAX_FILE_SIZE) {
-			// 	return toast.error(
-			// 		`${validFiles[0].name} exceeds max size of ${
-			// 			MAX_FILE_SIZE / 1048576
-			// 		}mb`
-			// 	);
-			// }
 			if (validFiles.length > 0) {
 				setDisplayedVideoThumbnail(validFiles[0]);
 			} else {
@@ -771,17 +754,22 @@ const ArticleModal = ({
 												</div>
 												<div className={styles.image_row}>
 													{displayedImages.map(
-														(displayedImage: File) => (
+														(displayedImage, idx) => (
 															<div
-																key={displayedImage.name}
+																key={
+																	typeof displayedImage ===
+																	"string"
+																		? displayedImage
+																		: displayedImage.name +
+																		  idx
+																}
 																className={styles.image}
 															>
 																<CustomImage
 																	src={
-																		displayedImage.name.includes(
-																			"cloudinary"
-																		)
-																			? displayedImage.name
+																		typeof displayedImage ===
+																		"string"
+																			? displayedImage
 																			: URL.createObjectURL(
 																					displayedImage
 																			  )
@@ -851,16 +839,18 @@ const ArticleModal = ({
 													{displayedVideoThumbnail && (
 														<div
 															key={
-																displayedVideoThumbnail.name
+																typeof displayedVideoThumbnail ===
+																"string"
+																	? displayedVideoThumbnail
+																	: displayedVideoThumbnail.name
 															}
 															className={styles.image}
 														>
 															<CustomImage
 																src={
-																	displayedVideoThumbnail.name.includes(
-																		"cloudinary"
-																	)
-																		? displayedVideoThumbnail.name
+																	typeof displayedVideoThumbnail ===
+																	"string"
+																		? displayedVideoThumbnail
 																		: URL.createObjectURL(
 																				displayedVideoThumbnail
 																		  )

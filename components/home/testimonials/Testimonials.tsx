@@ -11,6 +11,7 @@ import Title from "@/shared/title/Title";
 import Image from "next/image";
 import { useGetTestimonials } from "@/app/api/hooks/testimonials";
 import { PageLoader } from "@/shared/loaders";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -21,59 +22,36 @@ const Testimonials = () => {
 
 	const mainRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => {
-		const container = mainRef.current;
-		const title = container?.querySelector(`.${styles.title}`) as HTMLElement;
-		const slider = container?.querySelector(`.${styles.slider}`) as HTMLElement;
-		if (container && !isLoading && window.innerWidth > 485) {
-			const animation = gsap.fromTo(
-				[title, slider],
-				{
-					y: 500
-				},
-				{
-					y: 0,
-					ease: "none",
-					stagger: 0.2,
-					// duration: 1.5,
-					scrollTrigger: {
-						trigger: container,
-						start: "top bottom-=100px",
-						end: "center center-=100px",
-						scrub: 1.5
-					}
-				}
-			);
-			return () => {
-				animation.kill();
-				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-			};
-		}
-		if (container && !isLoading && window.innerWidth < 485) {
-			const animation = gsap.fromTo(
-				[title, slider],
-				{
-					y: 500
-				},
-				{
-					y: 0,
-					ease: "none",
-					stagger: 0.2,
-					// duration: 1.5,
-					scrollTrigger: {
-						trigger: container,
-						start: "top bottom-=400px",
-						end: "bottom center-=700px",
-						scrub: 1.5
-					}
-				}
-			);
-			return () => {
-				animation.kill();
-				ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-			};
-		}
-	}, [isLoading]);
+	const { scrollYProgress } = useScroll({
+		target: mainRef,
+		offset: ["start end", "end center"]
+	});
+
+	const rawY = useTransform(scrollYProgress, [0, 0.2], [300, 0]);
+	const y = useSpring(rawY, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
+	const rawOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
+	const opacity = useSpring(rawOpacity, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
+
+	const rawYSlides = useTransform(scrollYProgress, [0.2, 0.7], [200, 0]);
+	const ySlides = useSpring(rawYSlides, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
+	const rawOpacitySlides = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
+	const opacitySlides = useSpring(rawOpacitySlides, {
+		stiffness: 100,
+		damping: 20,
+		mass: 0.5
+	});
 
 	useEffect(() => {
 		if (window.innerWidth <= 600) {
@@ -85,12 +63,17 @@ const Testimonials = () => {
 	return (
 		<section className={styles.testimonials} ref={mainRef}>
 			<div className={styles.container}>
-				<Title
-					title="Success Stories from Our Clients"
-					subTitle="TESTIMONIALS"
-					className={styles.title}
-				/>
-				<div className={`${styles.slider}`}>
+				<motion.div style={{ y, opacity }}>
+					<Title
+						title="Success Stories from Our Clients"
+						subTitle="TESTIMONIALS"
+						className={styles.title}
+					/>
+				</motion.div>
+				<motion.div
+					className={`${styles.slider}`}
+					style={{ y: ySlides, opacity: opacitySlides }}
+				>
 					<Swiper
 						slidesPerView={slides}
 						spaceBetween={16}
@@ -144,7 +127,7 @@ const Testimonials = () => {
 							))
 						)}
 					</Swiper>
-				</div>
+				</motion.div>
 			</div>
 		</section>
 	);
