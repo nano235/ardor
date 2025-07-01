@@ -53,7 +53,7 @@ const Connect = () => {
 				className={styles.link_container}
 				style={{ y: yButton, opacity: opacityButton }}
 			>
-				<CustomLink href="/contact" label="Let’s Work Together" />
+				<CustomLink href="/contact-us" label="Let’s Work Together" />
 			</motion.div>
 		</div>
 	);

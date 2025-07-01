@@ -147,7 +147,7 @@
 
 import React, { useRef } from "react";
 import styles from "./Services.module.scss";
-import { Title, CustomLink, Button } from "@/shared";
+import { Title, CustomLink } from "@/shared";
 import { media } from "@/mock/media.mock";
 import Image from "next/image";
 import { shortenTitle } from "@/utils/stringShortner copy";
@@ -165,28 +165,32 @@ interface Card {
 export const cards: Card[] = [
 	{
 		title: "Promotion Videos",
-		description: "We create high-impact videos that boost awareness and sales.",
+		description:
+			"Stand out from the noise with eye-catching visuals that drive awareness and get your audience excited about what you offer.",
 		image: media.promotionVideo,
 		icon: "/svgs/promotion.svg",
 		link: "/learn-more?service=promotion-videos"
 	},
 	{
 		title: "Social Media Video Editing",
-		description: "We create high-impact videos that boost awareness and sales.",
+		description:
+			"Turn scrollers into followers with  platform-optimized videos that deliver your message fast and memorably.",
 		image: media.socialMedia,
 		icon: "/svgs/video.svg",
 		link: "/learn-more?service=social-media-video-editing"
 	},
 	{
 		title: "Product Demo",
-		description: "We create high-impact videos that boost awareness and sales.",
+		description:
+			"Showcase your product in action with clean, clear, and captivating visuals",
 		image: media.productDemo,
 		icon: "/svgs/product.svg",
 		link: "/learn-more?service=product-demo"
 	},
 	{
 		title: "Brand Animation",
-		description: "We create high-impact videos that boost awareness and sales.",
+		description:
+			"Add motion to your brand story with logo reveals, animated graphics, and visual storytelling",
 		image: media.brandAnimation,
 		icon: "/svgs/brand.svg",
 		link: "/learn-more?service=brand-animation"
@@ -200,7 +204,7 @@ const Services = () => {
 	// Track scroll position relative to the section
 	const { scrollYProgress } = useScroll({
 		target: mainRef,
-		offset: ["start end", "end center"]
+		offset: ["start end", "end end"]
 	});
 
 	// Transform values
@@ -229,9 +233,8 @@ const Services = () => {
 
 					<div className={styles.text}>
 						<p>
-							From product demos to promotional videos, we craft
-							high-quality motion design and video edits that engage your
-							audience and elevate your brand
+							Whether it’s a product demo or a punchy promo, we turn your
+							ideas into videos that connect with people and drives result
 						</p>
 						<CustomLink href="/services" label="See All Services" />
 					</div>
@@ -281,7 +284,12 @@ const Card = ({ card, index, scrollYProgress, router }: CardProps) => {
 		mass: 0.5
 	});
 	return (
-		<motion.div className={styles.card_container} key={index} style={{ y, opacity }}>
+		<motion.div
+			className={styles.card_container}
+			key={index}
+			style={{ y, opacity }}
+			onClick={() => router.push(card.link)}
+		>
 			<div
 				className={styles.card}
 				style={{
@@ -298,12 +306,12 @@ const Card = ({ card, index, scrollYProgress, router }: CardProps) => {
 						<h3>{card.title}</h3>
 						<p>{card.description}</p>
 					</div>
-					<Button
+					{/* <Button
 						className={styles.button}
 						onClick={() => router.push(card.link)}
 					>
 						Learn More
-					</Button>
+					</Button> */}
 				</div>
 			</div>
 

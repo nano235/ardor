@@ -107,7 +107,7 @@ const BestWork = () => {
 	// }, [isFetchingArticles, articles?.length]);
 	const { scrollYProgress } = useScroll({
 		target: mainRef,
-		offset: ["start end", "end center"]
+		offset: ["start end", "end end"]
 	});
 
 	const rawY = useTransform(scrollYProgress, [0, 0.2], [300, 0]);

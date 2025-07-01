@@ -176,7 +176,7 @@ const Process = () => {
 				<div className={styles.mob_block}>
 					<motion.div style={{ y, opacity }}>
 						<Title
-							subTitle="Our Processes"
+							subTitle="OUR PROCESS"
 							title="Our Creative Process – Tailored for Your Video Needs"
 							className={styles.title}
 						/>

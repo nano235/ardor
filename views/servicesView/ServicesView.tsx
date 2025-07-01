@@ -2,7 +2,7 @@
 
 import React from "react";
 import styles from "./ServicesView.module.scss";
-import { Button, Title } from "@/shared";
+import { Title } from "@/shared";
 import { cards } from "@/components/home/services/Services";
 import Image from "next/image";
 import { shortenTitle } from "@/utils/stringShortner copy";
@@ -28,7 +28,11 @@ const ServicesView = () => {
 				</div>
 				<div className={styles.grid}>
 					{cards.map((card, index) => (
-						<div className={styles.card_container} key={index}>
+						<div
+							className={styles.card_container}
+							key={index}
+							onClick={() => router.push(card.link)}
+						>
 							<div
 								className={styles.card}
 								style={{
@@ -49,12 +53,12 @@ const ServicesView = () => {
 										<h3>{card.title}</h3>
 										<p>{card.description}</p>
 									</div>
-									<Button
+									{/* <Button
 										className={styles.button}
 										onClick={() => router.push(card.link)}
 									>
 										Learn More
-									</Button>
+									</Button> */}
 								</div>
 							</div>
 							<div className={styles.card_mobile}>

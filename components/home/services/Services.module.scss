@@ -12,7 +12,7 @@
 		@include flex(space-between);
 		gap: 3.2rem;
 		.title {
-			max-width: 50%;
+			max-width: 76.4rem;
 			margin-top: -3rem;
 			z-index: 1;
 			position: relative;
@@ -43,6 +43,7 @@
 				background-repeat: no-repeat;
 				position: relative;
 				@include flex();
+				cursor: pointer;
 				.background {
 					position: relative;
 					bottom: 0;
@@ -92,7 +93,7 @@
 				&:hover {
 					.background {
 						background-color: #0834f8;
-						height: 34.4rem;
+						height: 24.4rem;
 						transition: all 0.6s ease-in-out;
 						.text {
 							p {
