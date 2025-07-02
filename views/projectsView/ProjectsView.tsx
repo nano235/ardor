@@ -69,12 +69,14 @@ const ProjectsView = () => {
 								key={index}
 							>
 								{article.videos && (
-									<div className={styles.image}>
-										<Image
-											src={article.videos[0].thumbnail}
-											alt={article.title as string}
-											fill
-										/>
+									<div className={styles.image_container}>
+										<div className={styles.image}>
+											<Image
+												src={article.videos[0].thumbnail}
+												alt={article.title as string}
+												fill
+											/>
+										</div>
 									</div>
 								)}
 								<div className={styles.text}>

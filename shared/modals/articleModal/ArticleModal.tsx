@@ -152,11 +152,15 @@ const ArticleModal = ({
 					const filesToUpload = displayedImages.filter(
 						img => img instanceof File
 					) as File[];
-					const imgUploadRes = await postUploadFile(filesToUpload);
-					if (!imgUploadRes || !imgUploadRes.length) {
-						throw new Error("Failed to upload images");
+					if (filesToUpload.length) {
+						const imgUploadRes = await postUploadFile(filesToUpload);
+						if (!imgUploadRes || !imgUploadRes.length) {
+							throw new Error("Failed to upload images");
+						}
+						media.images = imgUploadRes.map(
+							(upload: UploadResult) => upload.url
+						);
 					}
-					media.images = imgUploadRes.map((upload: UploadResult) => upload.url);
 				} catch (uploadError: Error | unknown) {
 					const errorMessage =
 						uploadError instanceof Error
@@ -168,14 +172,18 @@ const ArticleModal = ({
 			}
 			if (displayedVideoThumbnail) {
 				try {
-					if (typeof displayedVideoThumbnail === "string") return;
-					const videoThumbnailUploadRes = await postUploadFile([
-						displayedVideoThumbnail
-					]);
-					if (!videoThumbnailUploadRes || !videoThumbnailUploadRes.length) {
-						throw new Error("Failed to upload video thumbnail");
+					if (typeof displayedVideoThumbnail !== "string") {
+						const videoThumbnailUploadRes = await postUploadFile([
+							displayedVideoThumbnail
+						]);
+						if (!videoThumbnailUploadRes || !videoThumbnailUploadRes.length) {
+							throw new Error("Failed to upload video thumbnail");
+						}
+						media.thumbnail = videoThumbnailUploadRes[0].url;
 					}
-					media.thumbnail = videoThumbnailUploadRes[0].url;
+					if (typeof displayedVideoThumbnail === "string") {
+						media.thumbnail = displayedVideoThumbnail;
+					}
 				} catch (uploadError: Error | unknown) {
 					const errorMessage =
 						uploadError instanceof Error
@@ -204,6 +212,7 @@ const ArticleModal = ({
 				projectType: values.projectType,
 				metrics: values.metrics
 			};
+			console.log(payload);
 			if (title === SettingsOperationType.EDIT) {
 				const res = await patchArticle(payload);
 				if (res) {
