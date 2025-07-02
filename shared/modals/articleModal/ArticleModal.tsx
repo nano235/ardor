@@ -340,7 +340,6 @@ const ArticleModal = ({
 									setFieldValue,
 									values
 								}) => {
-									console.log(values);
 									return (
 										<Form>
 											<Field name="title">
