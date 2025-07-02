@@ -16,7 +16,7 @@ export interface IArticle {
 	solutions?: string[];
 	images?: string[];
 	videos?: Video[];
-	categories?: ICategory[];
+	categories?: ICategory[] | string[];
 	featured?: boolean;
 	slug?: string;
 	createdAt?: Date;

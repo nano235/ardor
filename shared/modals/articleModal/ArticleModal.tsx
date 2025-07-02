@@ -81,9 +81,6 @@ const ArticleModal = ({
 	const [displayedImages, setDisplayedImages] = useState<(File | string)[]>(
 		article?.images || []
 	);
-	const [displayedVideos, setDisplayedVideos] = useState<string>(
-		article?.videos?.length ? article?.videos[0].url : ""
-	);
 
 	const [displayedVideoThumbnail, setDisplayedVideoThumbnail] = useState<File | string>(
 		article?.videos![0].thumbnail || ""
@@ -92,7 +89,13 @@ const ArticleModal = ({
 	const initialValues: IArticle = {
 		title: article?.title,
 		description: article?.description,
-		categories: article?.categories,
+		categories: article?.categories?.[0]
+			? ([
+					typeof article.categories[0] === "string"
+						? article.categories[0]
+						: article.categories[0]._id
+			  ].filter(Boolean) as string[])
+			: [],
 		featured: article?.featured,
 		client: article?.client,
 		agency: article?.agency,
@@ -152,6 +155,9 @@ const ArticleModal = ({
 					const filesToUpload = displayedImages.filter(
 						img => img instanceof File
 					) as File[];
+					const filesToNotUpload = displayedImages.filter(
+						img => typeof img === "string"
+					);
 					if (filesToUpload.length) {
 						const imgUploadRes = await postUploadFile(filesToUpload);
 						if (!imgUploadRes || !imgUploadRes.length) {
@@ -160,6 +166,9 @@ const ArticleModal = ({
 						media.images = imgUploadRes.map(
 							(upload: UploadResult) => upload.url
 						);
+					}
+					if (filesToNotUpload.length) {
+						media.images = filesToNotUpload as string[];
 					}
 				} catch (uploadError: Error | unknown) {
 					const errorMessage =
@@ -201,7 +210,9 @@ const ArticleModal = ({
 				client: values.client,
 				agency: values.agency,
 				images: media.images,
-				videos: [{ url: displayedVideos, thumbnail: media.thumbnail }],
+				videos: [
+					{ url: values.videos?.[0]?.url as string, thumbnail: media.thumbnail }
+				],
 				challenges: values.challenges,
 				solutions: values.solutions,
 				productionTime: values.productionTime,
@@ -212,7 +223,6 @@ const ArticleModal = ({
 				projectType: values.projectType,
 				metrics: values.metrics
 			};
-			console.log(payload);
 			if (title === SettingsOperationType.EDIT) {
 				const res = await patchArticle(payload);
 				if (res) {
@@ -330,6 +340,7 @@ const ArticleModal = ({
 									setFieldValue,
 									values
 								}) => {
+									console.log(values);
 									return (
 										<Form>
 											<Field name="title">
@@ -382,9 +393,14 @@ const ArticleModal = ({
 															categories?.data.find(
 																category =>
 																	category._id ===
-																	article
-																		?.categories?.[0]
-																		._id
+																	(typeof article
+																		?.categories?.[0] ===
+																	"string"
+																		? article
+																				?.categories?.[0]
+																		: article
+																				?.categories?.[0]
+																				?._id)
 															)?.name || "Enter Categories"
 														}
 														options={categories?.data || []}
@@ -717,9 +733,6 @@ const ArticleModal = ({
 															setFieldValue("videos", [
 																{ url: e.target.value }
 															]);
-															setDisplayedVideos(
-																e.target.value
-															);
 														}}
 														error={
 															(touched.videos &&
