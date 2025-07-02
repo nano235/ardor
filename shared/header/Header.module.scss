@@ -116,6 +116,7 @@
 	@include screenMax("tablet") {
 		order: 3;
 		width: 100%;
+		height: 100vh;
 		position: fixed;
 		top: 10rem;
 		left: 0;
@@ -131,6 +132,7 @@
 .header_wrapper__collapsed {
 	@include screenMax("tablet") {
 		transform: translateX(101vw);
+		display: none;
 	}
 }
 
