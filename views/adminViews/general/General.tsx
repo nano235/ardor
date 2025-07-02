@@ -35,7 +35,13 @@ const General = () => {
 		design: generalData?.data?.design || "",
 		expert: generalData?.data?.expert || "",
 		sound: generalData?.data?.sound || "",
-		delivery: generalData?.data?.delivery || ""
+		delivery: generalData?.data?.delivery || "",
+		discoveryMob: generalData?.data?.discoveryMob || "",
+		scriptMob: generalData?.data?.scriptMob || "",
+		designMob: generalData?.data?.designMob || "",
+		expertMob: generalData?.data?.expertMob || "",
+		soundMob: generalData?.data?.soundMob || "",
+		deliveryMob: generalData?.data?.deliveryMob || ""
 	};
 
 	const generalSchema = Yup.object().shape({
@@ -335,6 +341,120 @@ const General = () => {
 													error={
 														(touched.delivery &&
 															errors.delivery) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="discoveryMob">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Discovery & Strategy Mobile video link"
+													placeholder={
+														generalData?.data.discoveryMob ||
+														"Enter Discovery & Strategy"
+													}
+													className={styles.input}
+													error={
+														(touched.discoveryMob &&
+															errors.discoveryMob) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="scriptMob">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Script & Concept Development Mobile video link"
+													placeholder={
+														generalData?.data.scriptMob ||
+														"Enter Script & Concept Development"
+													}
+													className={styles.input}
+													error={
+														(touched.scriptMob &&
+															errors.scriptMob) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="designMob">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Design & Storyboarding Mobile video link"
+													placeholder={
+														generalData?.data.designMob ||
+														"Enter Design & Storyboarding"
+													}
+													className={styles.input}
+													error={
+														(touched.designMob &&
+															errors.designMob) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="expertMob">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Expert Editing & Animation Mobile video link"
+													placeholder={
+														generalData?.data.expertMob ||
+														"Enter Expert Editing & Animation"
+													}
+													className={styles.input}
+													error={
+														(touched.expertMob &&
+															errors.expertMob) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="soundMob">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Sound & Voiceover Integration Mobile video link"
+													placeholder={
+														generalData?.data.soundMob ||
+														"Enter Sound & Voiceover Integration"
+													}
+													className={styles.input}
+													error={
+														(touched.soundMob &&
+															errors.soundMob) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="deliveryMob">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Final Delivery & Optimization Mobile video link"
+													placeholder={
+														generalData?.data.deliveryMob ||
+														"Enter Final Delivery & Optimization"
+													}
+													className={styles.input}
+													error={
+														(touched.deliveryMob &&
+															errors.deliveryMob) ||
 														""
 													}
 													type="text"

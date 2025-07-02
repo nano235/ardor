@@ -21,6 +21,12 @@ export interface IGeneral {
 	expert?: string;
 	sound?: string;
 	delivery?: string;
+	discoveryMob?: string;
+	scriptMob?: string;
+	designMob?: string;
+	expertMob?: string;
+	soundMob?: string;
+	deliveryMob?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
 	_id?: string;

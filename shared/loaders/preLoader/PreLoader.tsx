@@ -5,14 +5,14 @@ import styles from "./PreLoader.module.scss";
 import { useGlobalContext } from "@/context/AppContext";
 import Image from "next/image";
 const PreLoader = () => {
-	const { progress, isPageLoaded } = useGlobalContext();
+	const { isPageLoaded } = useGlobalContext();
 	return (
 		<div className={styles.preLoader} data-is-page-loaded={isPageLoaded}>
 			<div className={styles.title}>{/* <h1>ARDORS</h1> */}</div>
 			<div className={styles.video}>
 				<Image src="/ardors.gif" fill alt="" />
 			</div>
-			<div className={styles.progress_container}>
+			{/* <div className={styles.progress_container}>
 				<div className={styles.text}>
 					<h1>{progress}%</h1>
 				</div>
@@ -22,7 +22,7 @@ const PreLoader = () => {
 						style={{ width: `${progress}%` }}
 					></div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };

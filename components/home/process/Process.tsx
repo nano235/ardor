@@ -6,6 +6,7 @@ import { Accordion, CustomLink, Slider, Title } from "@/shared";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useScroll, useSpring, useTransform, motion } from "framer-motion";
+import { useAppAssets } from "@/hooks/useLoading";
 gsap.registerPlugin(ScrollTrigger);
 
 const processes = [
@@ -53,69 +54,45 @@ const processes = [
 	}
 ];
 const Process = () => {
+	const { useGetGeneral } = useAppAssets();
+	const { data: general } = useGetGeneral();
 	const [activeAccordion, setActiveAccordion] = useState<string | number | null>(null);
 	const handleToggle = (id: string | number) => {
 		setActiveAccordion(activeAccordion === id ? null : id);
 	};
 	const mainRef = useRef<HTMLDivElement>(null);
 
-	// useEffect(() => {
-	// 	const container = mainRef.current;
-	// 	const block = container?.querySelector(`.${styles.block}`) as HTMLElement;
-	// 	const reel = container?.querySelector(`.${styles.reel}`) as HTMLElement;
-	// 	const mobBlock = container?.querySelector(`.${styles.mob_block}`) as HTMLElement;
-	// 	const mobLinkContainer = container?.querySelector(
-	// 		`.${styles.mob_link_container}`
-	// 	) as HTMLElement;
-	// 	if (container && window.innerWidth > 485) {
-	// 		const animation = gsap.fromTo(
-	// 			[block, reel],
-	// 			{
-	// 				y: 500
-	// 			},
-	// 			{
-	// 				y: 0,
-	// 				ease: "none",
-	// 				stagger: 0.2,
-	// 				// duration: 1.5,
-	// 				scrollTrigger: {
-	// 					trigger: container,
-	// 					start: "top bottom",
-	// 					end: "center center-=500px",
-	// 					scrub: 1.5
-	// 				}
-	// 			}
-	// 		);
-	// 		return () => {
-	// 			animation.kill();
-	// 			ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-	// 		};
-	// 	}
-	// 	if (container && window.innerWidth < 485) {
-	// 		const animation = gsap.fromTo(
-	// 			[...mobBlock.childNodes, mobLinkContainer],
-	// 			{
-	// 				y: 500
-	// 			},
-	// 			{
-	// 				y: 0,
-	// 				ease: "none",
-	// 				stagger: 0.2,
-	// 				// duration: 1.5,
-	// 				scrollTrigger: {
-	// 					trigger: container,
-	// 					start: "top bottom-=1000px",
-	// 					end: "bottom top-=600px",
-	// 					scrub: 1.5
-	// 				}
-	// 			}
-	// 		);
-	// 		return () => {
-	// 			animation.kill();
-	// 			ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-	// 		};
-	// 	}
-	// }, []);
+	const videos = [
+		{
+			id: 1,
+			src: general?.data.discovery
+		},
+		{
+			id: 2,
+			src: general?.data.script
+		},
+		{
+			id: 3,
+			src: general?.data.design
+		},
+		{
+			id: 4,
+			src: general?.data.expert
+		},
+		{
+			id: 5,
+			src: general?.data.sound
+		},
+		{
+			id: 6,
+			src: general?.data.delivery
+		}
+	];
+
+	const displayedVideo = () => {
+		const _video = videos.find(video => video.id === activeAccordion);
+		return _video;
+	};
 
 	const { scrollYProgress } = useScroll({
 		target: mainRef,
@@ -147,6 +124,7 @@ const Process = () => {
 		damping: 20,
 		mass: 0.5
 	});
+
 	return (
 		<div className={styles.process} ref={mainRef}>
 			<div className={styles.container}>
@@ -172,7 +150,19 @@ const Process = () => {
 				<motion.div
 					className={styles.reel}
 					style={{ y: yReel, opacity: opacityReel }}
-				></motion.div>
+				>
+					<video
+						src={
+							displayedVideo()?.src ||
+							general?.data.discovery ||
+							"https://www.youtube.com"
+						}
+						autoPlay
+						muted
+						loop
+						style={{ width: "100%", height: "100%" }}
+					/>
+				</motion.div>
 				<div className={styles.mob_block}>
 					<motion.div style={{ y, opacity }}>
 						<Title
