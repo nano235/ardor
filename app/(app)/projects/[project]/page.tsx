@@ -22,9 +22,10 @@ const getPost = async (slug: string) => {
 export async function generateMetadata({
 	params
 }: {
-	params: Params;
+	params: Promise<Params>;
 }): Promise<Metadata> {
-	const post = await getPost(params.project);
+	const resolvedParams = await params;
+	const post = await getPost(resolvedParams.project);
 
 	if (!post) {
 		return {
@@ -32,7 +33,6 @@ export async function generateMetadata({
 			description: "The requested project could not be found."
 		};
 	}
-	console.log(post);
 
 	return {
 		title: post.data.title || "Project",
