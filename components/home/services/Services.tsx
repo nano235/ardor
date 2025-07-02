@@ -159,6 +159,7 @@ const Card = ({ card, index, scrollYProgress, router }: CardProps) => {
 						autoPlay
 						muted
 						loop
+						playsInline
 					></video>
 				</div>
 				<div className={styles.background}>

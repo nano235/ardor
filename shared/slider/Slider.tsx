@@ -82,6 +82,7 @@ const Slider = ({ sliders, className }: SliderProps) => {
 								autoPlay
 								muted
 								loop
+								playsInline
 								style={{ width: "100%", height: "100%" }}
 							/>
 						</div>
