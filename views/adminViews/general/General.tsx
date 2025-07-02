@@ -28,7 +28,8 @@ const General = () => {
 		promotionVideo: generalData?.data?.promotionVideo || "",
 		productDemo: generalData?.data?.productDemo || "",
 		socialMedia: generalData?.data?.socialMedia || "",
-		brandAnimation: generalData?.data?.brandAnimation || ""
+		brandAnimation: generalData?.data?.brandAnimation || "",
+		pinterest: generalData?.data?.pinterest || ""
 	};
 
 	const generalSchema = Yup.object().shape({
@@ -46,7 +47,8 @@ const General = () => {
 		productDemo: Yup.string(),
 		promotionVideo: Yup.string(),
 		socialMedia: Yup.string(),
-		brandAnimation: Yup.string()
+		brandAnimation: Yup.string(),
+		pinterest: Yup.string()
 	});
 
 	const handleSubmit = async (values: IGeneral) => {
@@ -359,6 +361,25 @@ const General = () => {
 													error={
 														(touched.tikTok &&
 															errors.tikTok) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="pinterest">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="pinterest"
+													placeholder={
+														generalData?.data.pinterest ||
+														"Enter pinterest link"
+													}
+													className={styles.input}
+													error={
+														(touched.pinterest &&
+															errors.pinterest) ||
 														""
 													}
 													type="text"

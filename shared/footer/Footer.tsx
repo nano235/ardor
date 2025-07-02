@@ -41,6 +41,11 @@ const Footer = () => {
 			label: "tiktok",
 			href: general?.data.tikTok,
 			icon: "/svgs/icon-tiktok.svg"
+		},
+		general?.data.pinterest && {
+			label: "pinterest",
+			href: general?.data.pinterest,
+			icon: "/images/pinterest.png"
 		}
 	].filter(Boolean);
 

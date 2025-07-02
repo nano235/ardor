@@ -6,8 +6,11 @@ import { Button, Title } from "@/shared";
 import Image from "next/image";
 import { useGetCareers } from "@/app/api/hooks/careers";
 import { PageLoader } from "@/shared/loaders";
+import { useAppAssets } from "@/hooks/useLoading";
 const CareersView = () => {
 	const { data: careers, isFetching } = useGetCareers();
+	const { useGetGeneral } = useAppAssets();
+	const { data: generalData } = useGetGeneral();
 	return (
 		<div className={styles.careers}>
 			<div className={styles.container}>
@@ -20,9 +23,9 @@ const CareersView = () => {
 					className={styles.button}
 					buttonType="secondary"
 					icon="/svgs/arrow-white.svg"
-					href="mailto:info@ardors.com"
+					href={`mailto:${generalData?.data?.email}`}
 				>
-					info@ardors.com
+					{generalData?.data?.email}
 				</Button>
 				<div className={styles.card_container}>
 					{isFetching ? (
@@ -61,7 +64,7 @@ const CareersView = () => {
 								<Button
 									className={styles.apply_button}
 									icon="/svgs/arrow-white.svg"
-									href="mailto:info@ardors.com"
+									href={`mailto:${generalData?.data?.email}`}
 								>
 									Apply Now
 								</Button>

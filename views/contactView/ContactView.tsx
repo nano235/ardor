@@ -5,6 +5,7 @@ import styles from "./ContactView.module.scss";
 import { Button, CustomLink, InputField, TextArea, Title } from "@/shared";
 import { Formik, Form, Field, FieldProps } from "formik";
 import * as Yup from "yup";
+import { useAppAssets } from "@/hooks/useLoading";
 
 interface ContactFormValues {
 	name: string;
@@ -13,6 +14,8 @@ interface ContactFormValues {
 }
 
 const ContactView = () => {
+	const { useGetGeneral } = useAppAssets();
+	const { data: generalData } = useGetGeneral();
 	const initialValues: ContactFormValues = {
 		name: "",
 		email: "",
@@ -38,8 +41,8 @@ const ContactView = () => {
 							Let’s collaborate! 🚀
 						</h6>
 						<CustomLink
-							href="mailto:hello@ardors.studio"
-							label="info@ardors.studio"
+							href={`mailto:${generalData?.data?.email}`}
+							label={generalData?.data?.email || "info@ardors.studio"}
 						/>
 					</div>
 				</div>

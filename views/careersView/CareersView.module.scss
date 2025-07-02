@@ -28,7 +28,7 @@
 				.details {
 					@include flex(flex-start, flex-start, column);
 					gap: 2rem;
-					max-width: 39.5rem;
+					max-width: 59.5rem;
 					h3 {
 						@extend %text-12;
 						color: #fff;
