@@ -43,6 +43,11 @@ export const adminNavLinks: NavLink[] = [
 		external: false
 	},
 	{
+		label: "teams",
+		href: "/admin/teams",
+		external: false
+	},
+	{
 		label: "careers",
 		href: "/admin/careers",
 		external: false

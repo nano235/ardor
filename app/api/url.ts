@@ -9,5 +9,6 @@ export const API_URL = {
 	testimonial: "/testimonials",
 	career: "/careers",
 	general: "/general",
-	videos: "/videos"
+	videos: "/videos",
+	team: "/team"
 };

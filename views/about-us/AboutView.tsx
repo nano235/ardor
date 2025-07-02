@@ -1,9 +1,14 @@
+"use client";
+
 import React from "react";
 import styles from "./AboutView.module.scss";
 import { Title } from "@/shared";
 import Image from "next/image";
+import { useGetTeams } from "@/app/api/hooks/team";
+import { PageLoader } from "@/shared/loaders";
 
 const AboutView = () => {
+	const { data: teamsData, isFetching } = useGetTeams();
 	return (
 		<div className={styles.about}>
 			<div className={styles.container}>
@@ -68,19 +73,27 @@ const AboutView = () => {
 				</div> */}
 				<div className={styles.block}>
 					<Title title="Meet Our Team" className={styles.title} />
-					<div className={styles.grid}>
-						{Array.from({ length: 6 }).map((_, index) => (
-							<div className={styles.card} key={index}>
-								<div className={styles.image}>
-									<Image src={`/images/precious.png`} alt="team" fill />
+					{isFetching ? (
+						<PageLoader />
+					) : (
+						<div className={styles.grid}>
+							{teamsData?.data.map(team => (
+								<div className={styles.card} key={team._id}>
+									<div className={styles.image}>
+										<Image
+											src={team.avatar || `/images/precious.png`}
+											alt="team"
+											fill
+										/>
+									</div>
+									<div className={styles.text}>
+										<h3>{team.name}</h3>
+										<p>{team.role}</p>
+									</div>
 								</div>
-								<div className={styles.text}>
-									<h3>Precious</h3>
-									<p>Founder</p>
-								</div>
-							</div>
-						))}
-					</div>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

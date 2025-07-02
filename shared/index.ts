@@ -15,8 +15,10 @@ import Select from "./selects/select/Select";
 import AdvancedSelect from "./selects/advancedSelect/AdvancedSelect";
 import CustomImage from "./customImage/CustomImage";
 import ArticleModal from "./modals/articleModal/ArticleModal";
+import TeamsModal from "./modals/teamsModal/TeamsModal";
 
 export {
+	TeamsModal,
 	Logo,
 	Header,
 	Button,

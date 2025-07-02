@@ -12,7 +12,9 @@ import CareersView from "./careersView/CareersView";
 import Testimonials from "./adminViews/testimonials/Testimonials";
 import Careers from "./adminViews/careers/Careers";
 import General from "./adminViews/general/General";
+import TeamView from "./adminViews/team/TeamView";
 export {
+	TeamView,
 	HomeView,
 	ContactView,
 	ProjectsView,
