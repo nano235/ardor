@@ -1,3 +1,7 @@
+export interface IVideosData {
+	data: IVideos;
+}
+
 export interface IVideos {
 	promotionVideo?: string;
 	socialMedia: string;

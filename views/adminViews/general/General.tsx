@@ -29,7 +29,13 @@ const General = () => {
 		productDemo: generalData?.data?.productDemo || "",
 		socialMedia: generalData?.data?.socialMedia || "",
 		brandAnimation: generalData?.data?.brandAnimation || "",
-		pinterest: generalData?.data?.pinterest || ""
+		pinterest: generalData?.data?.pinterest || "",
+		discovery: generalData?.data?.discovery || "",
+		script: generalData?.data?.script || "",
+		design: generalData?.data?.design || "",
+		expert: generalData?.data?.expert || "",
+		sound: generalData?.data?.sound || "",
+		delivery: generalData?.data?.delivery || ""
 	};
 
 	const generalSchema = Yup.object().shape({
@@ -48,7 +54,13 @@ const General = () => {
 		promotionVideo: Yup.string(),
 		socialMedia: Yup.string(),
 		brandAnimation: Yup.string(),
-		pinterest: Yup.string()
+		pinterest: Yup.string(),
+		discovery: Yup.string(),
+		script: Yup.string(),
+		design: Yup.string(),
+		expert: Yup.string(),
+		sound: Yup.string(),
+		delivery: Yup.string()
 	});
 
 	const handleSubmit = async (values: IGeneral) => {
@@ -210,6 +222,119 @@ const General = () => {
 													error={
 														(touched.brandAnimation &&
 															errors.brandAnimation) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="discovery">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Discovery & Strategy video link"
+													placeholder={
+														generalData?.data.discovery ||
+														"Enter Discovery & Strategy"
+													}
+													className={styles.input}
+													error={
+														(touched.discovery &&
+															errors.discovery) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="script">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Script & Concept Development video link"
+													placeholder={
+														generalData?.data.script ||
+														"Enter Script & Concept Development"
+													}
+													className={styles.input}
+													error={
+														(touched.script &&
+															errors.script) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="design">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Design & Storyboarding video link"
+													placeholder={
+														generalData?.data.design ||
+														"Enter Design & Storyboarding"
+													}
+													className={styles.input}
+													error={
+														(touched.design &&
+															errors.design) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="expert">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Expert Editing & Animation video link"
+													placeholder={
+														generalData?.data.expert ||
+														"Enter Expert Editing & Animation"
+													}
+													className={styles.input}
+													error={
+														(touched.expert &&
+															errors.expert) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="sound">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Sound & Voiceover Integration video link"
+													placeholder={
+														generalData?.data.sound ||
+														"Enter Sound & Voiceover Integration"
+													}
+													className={styles.input}
+													error={
+														(touched.sound && errors.sound) ||
+														""
+													}
+													type="text"
+												/>
+											)}
+										</Field>
+										<Field name="delivery">
+											{({ field }: FieldProps) => (
+												<InputField
+													{...field}
+													label="Final Delivery & Optimization video link"
+													placeholder={
+														generalData?.data.delivery ||
+														"Enter Final Delivery & Optimization"
+													}
+													className={styles.input}
+													error={
+														(touched.delivery &&
+															errors.delivery) ||
 														""
 													}
 													type="text"

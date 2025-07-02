@@ -1,18 +1,28 @@
-export const media = {
-	promotionVideo: {
-		src: "https://res.cloudinary.com/dlq93g9xz/image/upload/v1743201094/promotion-videos_ettdvk.png",
-		alt: "promotion videos"
-	},
-	socialMedia: {
-		src: "https://res.cloudinary.com/dlq93g9xz/image/upload/v1743201095/social-media_dvv1ww.png",
-		alt: "social media"
-	},
-	productDemo: {
-		src: "https://res.cloudinary.com/dlq93g9xz/image/upload/v1743201095/product-demo_tx0pqz.png",
-		alt: "product demo"
-	},
-	brandAnimation: {
-		src: "https://res.cloudinary.com/dlq93g9xz/image/upload/v1743201094/brand-animation_rdskxb.png",
-		alt: "brand animation"
-	}
+"use client";
+
+import { useAppAssets } from "@/hooks/useLoading";
+
+export const useMedia = () => {
+	const { useGetGeneral } = useAppAssets();
+	const { data: generalData } = useGetGeneral();
+	return {
+		media: {
+			promotionVideo: {
+				src: generalData?.data.promotionVideo || "",
+				alt: "promotion videos"
+			},
+			socialMedia: {
+				src: generalData?.data.socialMedia || "",
+				alt: "social media"
+			},
+			productDemo: {
+				src: generalData?.data.productDemo || "",
+				alt: "product demo"
+			},
+			brandAnimation: {
+				src: generalData?.data.brandAnimation || "",
+				alt: "brand animation"
+			}
+		}
+	};
 };

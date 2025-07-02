@@ -8,5 +8,6 @@ export const API_URL = {
 	uploadFiles: "/media/upload",
 	testimonial: "/testimonials",
 	career: "/careers",
-	general: "/general"
+	general: "/general",
+	videos: "/videos"
 };
