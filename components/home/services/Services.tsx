@@ -148,9 +148,9 @@ const Card = ({ card, index, scrollYProgress, router }: CardProps) => {
 		>
 			<div
 				className={styles.card}
-				style={{
-					backgroundImage: `url(${card.image.src})`
-				}}
+				// style={{
+				// 	backgroundImage: `url(${card.image.src})`
+				// }}
 			>
 				<div className={styles.video_background}>
 					<video
