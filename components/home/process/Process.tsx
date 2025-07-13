@@ -130,7 +130,7 @@ const Process = () => {
 			<div className={styles.container}>
 				<motion.div className={styles.block} style={{ y, opacity }}>
 					<Title
-						subTitle="Our Process"
+						subTitle="OUR PROCESS"
 						title="Our Creative Process – Tailored for Your Video Needs"
 					/>
 					{processes.map(process => (
