@@ -6,6 +6,9 @@ import { Button, CustomLink, InputField, TextArea, Title } from "@/shared";
 import { Formik, Form, Field, FieldProps } from "formik";
 import * as Yup from "yup";
 import { useAppAssets } from "@/hooks/useLoading";
+import { FormikHelpers } from "formik";
+import toast from "react-hot-toast";
+import emailjs from "@emailjs/browser";
 
 interface ContactFormValues {
 	name: string;
@@ -27,6 +30,32 @@ const ContactView = () => {
 		email: Yup.string().email("Invalid email").required("Email is required"),
 		message: Yup.string().required("Message is required")
 	});
+
+	const sendEmail = async (
+		values: ContactFormValues,
+		actions: FormikHelpers<ContactFormValues>
+	) => {
+		try {
+			await emailjs.send(
+				process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+				process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+				{
+					name: values.name,
+					email: values.email,
+					message: values.message,
+					to_email: generalData?.data?.email
+				},
+				process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+			);
+			toast.success("Message sent successfully!");
+			actions.resetForm();
+		} catch (error) {
+			console.error("Send error", error);
+			toast.error("Something went wrong.");
+		} finally {
+			actions.setSubmitting(false);
+		}
+	};
 
 	return (
 		<div className={styles.contact}>
@@ -50,7 +79,7 @@ const ContactView = () => {
 					<Formik
 						initialValues={initialValues}
 						validationSchema={validationSchema}
-						onSubmit={() => {}}
+						onSubmit={sendEmail}
 						enableReinitialize
 					>
 						{({ errors, touched, isSubmitting }) => {
@@ -64,7 +93,6 @@ const ContactView = () => {
 												error={
 													(touched.name && errors.name) || ""
 												}
-												readOnly
 												placeholder="Enter Your Full Name"
 											/>
 										)}
@@ -77,12 +105,11 @@ const ContactView = () => {
 												error={
 													(touched.email && errors.email) || ""
 												}
-												readOnly
 												placeholder="Enter Your Email Address"
 											/>
 										)}
 									</Field>
-									<Field name="name">
+									<Field name="message">
 										{({ field }: FieldProps) => (
 											<TextArea
 												{...field}
@@ -91,7 +118,6 @@ const ContactView = () => {
 													(touched.message && errors.message) ||
 													""
 												}
-												readOnly
 												placeholder="What Do You Need?"
 											/>
 										)}
